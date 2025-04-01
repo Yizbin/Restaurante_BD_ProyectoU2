@@ -24,7 +24,9 @@ public class PruebasDominio {
 
         em.getTransaction().begin();
         Ingrediente ingrediente = new Ingrediente("tortillas harina", 10, "piezas");
+        Ingrediente ingrediente1 = new Ingrediente("carne de burro", 10, "kg");
         em.persist(ingrediente);
+        em.persist(ingrediente1);
         em.getTransaction().commit();
 
         em.close();
