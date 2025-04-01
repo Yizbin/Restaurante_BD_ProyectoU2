@@ -4,10 +4,24 @@
  */
 package Conexion;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 /**
  *
  * @author sonic
  */
 public class Conexion {
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU");
     
+    public static EntityManager crearConexion() {
+        return emf.createEntityManager();
+    }
+    
+    public static void cerrarConexion() {
+        if (emf.isOpen()) {
+            emf.close();
+        }
+    }
 }

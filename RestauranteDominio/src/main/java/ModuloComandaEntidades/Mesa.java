@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,15 +25,21 @@ public class Mesa implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @Column(name = "numero_mesa", unique = true, nullable = false)
+    private Integer numeroMesa;
     
-    @Id
-    @Column( name = "numero_mesa", nullable = false)
-    private int numeroMesa;
+    @OneToOne
+    @JoinColumn(name = "id_comanda", nullable = false, unique = true) 
+    private Comanda comanda;
+
+    public Mesa(Long id, Integer numeroMesa, Comanda comanda) {
+        this.id = id;
+        this.numeroMesa = numeroMesa;
+        this.comanda = comanda;
+    }
 
     public Mesa() {
     }
-    
-    
 
     public Long getId() {
         return id;
@@ -41,13 +49,24 @@ public class Mesa implements Serializable {
         this.id = id;
     }
 
-    public int getNumeroMesa() {
+    public Integer getNumeroMesa() {
         return numeroMesa;
     }
 
-    public void setNumeroMesa(int numeroMesa) {
+    public void setNumeroMesa(Integer numeroMesa) {
         this.numeroMesa = numeroMesa;
     }
+
+    public Comanda getComanda() {
+        return comanda;
+    }
+
+    public void setComanda(Comanda comanda) {
+        this.comanda = comanda;
+    }
+    
+
+    
 
     
     
