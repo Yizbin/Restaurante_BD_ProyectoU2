@@ -11,12 +11,14 @@ package ModuloIngredientesDTOs;
 public class ReabastecerIngredienteDTO {
 
     private Integer stock;
+    private String nombre;
 
     public ReabastecerIngredienteDTO() {
     }
 
-    public ReabastecerIngredienteDTO(Integer stock) {
+    public ReabastecerIngredienteDTO(Integer stock, String nombre) {
         this.stock = stock;
+        this.nombre = nombre;
     }
 
     public Integer getStock() {
@@ -26,5 +28,20 @@ public class ReabastecerIngredienteDTO {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    @Override
+    public String toString() {
+        return "ReabastecerIngredienteDTO{" + "stock=" + stock + ", nombre=" + nombre + '}';
+    }
+
+    
 
 }
