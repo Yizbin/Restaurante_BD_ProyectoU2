@@ -42,4 +42,95 @@ public class ClienteFrecuenteDTO {
         this.visitas = visitas;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public Date getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public int getClienteTipo() {
+        return clienteTipo;
+    }
+
+    public void setClienteTipo(int clienteTipo) {
+        this.clienteTipo = clienteTipo;
+    }
+
+    public Integer getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(Integer puntos) {
+        this.puntos = puntos;
+    }
+
+    public double getGastoAcumulado() {
+        return gastoAcumulado;
+    }
+
+    public void setGastoAcumulado(double gastoAcumulado) {
+        this.gastoAcumulado = gastoAcumulado;
+    }
+
+    public double getVisitas() {
+        return visitas;
+    }
+
+    public void setVisitas(double visitas) {
+        this.visitas = visitas;
+    }
+    
+    
+    
+
 }

@@ -31,7 +31,7 @@ public class DetalleComanda implements Serializable {
     @Column( name = "precio_unitario", nullable = false)
     private double precioUnitario;
     
-    @Column( name = "importe_total", nullable = false) //este es calculado ahorita lo cambiamos
+    @Column( name = "importe_total", nullable = false) // checar
     private double importeTotal;
 
     public Long getId() {
