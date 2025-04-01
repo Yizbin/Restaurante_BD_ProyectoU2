@@ -3,6 +3,8 @@
   <persistence-unit name="ConexionPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>ModuloIngredientesEntidades.Ingrediente</class>
+    <class>ModuloProductosEntidades.Producto</class>
+    <class>ModuloProductosEntidades.ProductoOcupaIngrediente</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/burritosElBurro?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
