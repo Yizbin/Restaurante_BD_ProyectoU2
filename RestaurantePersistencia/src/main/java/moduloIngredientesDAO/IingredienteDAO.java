@@ -19,6 +19,8 @@ public interface IingredienteDAO {
     public boolean existeIngrediente(String nombre, String unidadMedida);
     
     public boolean comandaActivaConIngrediente(Long idIngrediente);
+    
+    public void actualizarStock(Long id, int nuevoStock) throws PersistenciaException;
 
     public Ingrediente actualizarIngrediente(Ingrediente ingrediente) throws PersistenciaException;
 

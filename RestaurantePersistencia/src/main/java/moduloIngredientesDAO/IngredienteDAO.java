@@ -124,4 +124,24 @@ public class IngredienteDAO implements IingredienteDAO {
 
     }
 
+    @Override
+    public void actualizarStock(Long id, int nuevoStock) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            em.getTransaction().begin();
+            Ingrediente ingrediente = em.find(Ingrediente.class, id);
+            if (ingrediente == null) {
+                throw new PersistenciaException("No se encontro el ingrediente con id: " + id);
+            }
+            ingrediente.setStock(nuevoStock);
+            em.merge(ingrediente);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersistenciaException("No se pudo actualizar el stock del ingrediente: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
 }
