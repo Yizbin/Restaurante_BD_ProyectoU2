@@ -139,26 +139,26 @@ public class PruebasDominio {
         em.persist(mesa1);
 
         //TABLA CLIENTES FRECUENTES
-        ClienteFrecuente cliente1 = new ClienteFrecuente();
-        cliente1.setNombre("Gilberto");
-        cliente1.setApellidoPaterno("paredes");
-        cliente1.setApellidoMaterno("Flores");
-        cliente1.setClienteTipo(1);
-        cliente1.setCorreo("sonic15622@gmail.com");
-        cliente1.setFechaRegistro(new Date());
-        cliente1.setGastoAcumulado(0);
-        cliente1.setPuntos(0);
-        cliente1.setVisitas(0);
-        cliente1.setTelefono("6442595242");
+//        ClienteFrecuente cliente1 = new ClienteFrecuente();
+//        cliente1.setNombre("Gilberto");
+//        cliente1.setApellidoPaterno("paredes");
+//        cliente1.setApellidoMaterno("Flores");
+//        cliente1.setClienteTipo(1);
+//        cliente1.setCorreo("sonic15622@gmail.com");
+//        cliente1.setFechaRegistro(new Date());
+//        cliente1.setGastoAcumulado(0);
+//        cliente1.setPuntos(0);
+//        cliente1.setVisitas(0);
+//        cliente1.setTelefono("6442595242");
         
-        em.persist(cliente1);
+//        em.persist(cliente1);
 
         //TABLA COMANDAS
         LocalDateTime fechaComanda1 = LocalDateTime.now();
         String folio1 = generarFolio(fechaComanda1);
         
         Comanda comanda1 = new Comanda();
-        comanda1.setClienteFrecuente(cliente1);
+//        comanda1.setClienteFrecuente(cliente1);
         comanda1.setEstado(Estado.ABIERTA);
         comanda1.setFechaHora(fechaComanda1);
         comanda1.setFolio(folio1);

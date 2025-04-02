@@ -42,7 +42,7 @@ public class Comanda implements Serializable {
     private ClienteFrecuente clienteFrecuente;
     
     @ManyToOne
-    @JoinColumn(name = "numero_mesa", nullable = false)
+    @JoinColumn(name = "id_mesa", nullable = false)
     private Mesa mesa;
 
 
@@ -62,6 +62,9 @@ public class Comanda implements Serializable {
     @Column(name = "estado", nullable = false)
     private Estado estado;
 
+    public Comanda() {
+    }
+
     public Comanda(Long id, ClienteFrecuente clienteFrecuente, Mesa mesa, double totalAcumulado, LocalDateTime fechaHora, String folio, Estado estado) {
         this.id = id;
         this.clienteFrecuente = clienteFrecuente;
@@ -72,7 +75,13 @@ public class Comanda implements Serializable {
         this.estado = estado;
     }
 
-    public Comanda() {
+    public Comanda(ClienteFrecuente clienteFrecuente, Mesa mesa, double totalAcumulado, LocalDateTime fechaHora, String folio, Estado estado) {
+        this.clienteFrecuente = clienteFrecuente;
+        this.mesa = mesa;
+        this.totalAcumulado = totalAcumulado;
+        this.fechaHora = fechaHora;
+        this.folio = folio;
+        this.estado = estado;
     }
 
     public Long getId() {
@@ -138,6 +147,8 @@ public class Comanda implements Serializable {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+    
 
     
     

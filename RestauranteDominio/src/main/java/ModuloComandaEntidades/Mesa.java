@@ -5,12 +5,16 @@
 package ModuloComandaEntidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -28,19 +32,21 @@ public class Mesa implements Serializable {
     @Column(name = "numero_mesa", unique = true, nullable = false)
     private Integer numeroMesa;
     
-    @OneToOne
-    @JoinColumn(name = "id_comanda", nullable = false, unique = true) 
-    private Comanda comanda;
-
-    public Mesa(Long id, Integer numeroMesa, Comanda comanda) {
-        this.id = id;
-        this.numeroMesa = numeroMesa;
-        this.comanda = comanda;
-    }
+    @OneToMany(mappedBy = "mesa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comanda> comandas = new ArrayList<>();
 
     public Mesa() {
     }
 
+    public Mesa(Long id, Integer numeroMesa) {
+        this.id = id;
+        this.numeroMesa = numeroMesa;
+    }
+
+    public Mesa(Integer numeroMesa) {
+        this.numeroMesa = numeroMesa;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -57,13 +63,15 @@ public class Mesa implements Serializable {
         this.numeroMesa = numeroMesa;
     }
 
-    public Comanda getComanda() {
-        return comanda;
+    public List<Comanda> getComandas() {
+        return comandas;
     }
 
-    public void setComanda(Comanda comanda) {
-        this.comanda = comanda;
+    public void setComandas(List<Comanda> comandas) {
+        this.comandas = comandas;
     }
+
+    
     
 
     
