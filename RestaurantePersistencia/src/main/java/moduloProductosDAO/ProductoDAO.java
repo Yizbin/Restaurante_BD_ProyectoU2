@@ -6,8 +6,8 @@ package moduloProductosDAO;
 
 import Conexion.Conexion;
 import Exception.PersistenciaException;
+import ModuloProductosEntidades.Producto;
 import javax.persistence.EntityManager;
-import moduloProductosEntidades.Producto;
 
 /**
  *

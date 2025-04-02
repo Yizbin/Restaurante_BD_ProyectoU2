@@ -15,19 +15,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 /**
  *
  * @author isaac
  */
 @Entity
+@Table(name = "Cliente")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "cliente_tipo", discriminatorType
         = DiscriminatorType.INTEGER)
-public abstract class Cliente implements Serializable {
+public class Cliente implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente", nullable = false)
     private Long id;
 

@@ -2,20 +2,20 @@
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
   <persistence-unit name="ConexionPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>ModuloClientesEntidades.ClienteFrecuente</class>
+    <class>ModuloComandaEntidades.Comanda</class>
+    <class>ModuloComandaEntidades.DetalleComanda</class>
+    <class>ModuloComandaEntidades.Mesa</class>
     <class>ModuloIngredientesEntidades.Ingrediente</class>
-    <class>moduloClienteEntidades.Cliente</class>
-    <class>moduloClienteEntidades.ClienteFrecuente</class>
-    <class>moduloComandaEntidades.Comanda</class>
-    <class>moduloComandaEntidades.DetalleComanda</class>
-    <class>moduloComandaEntidades.Mesa</class>
-    <class>moduloProductosEntidades.Producto</class>
-    <class>moduloProductosEntidades.ProductoOcupaIngrediente</class>
+    <class>ModuloProductosEntidades.Producto</class>
+    <class>ModuloProductosEntidades.ProductoOcupaIngrediente</class>
+    <class>ModuloClientesEntidades.Cliente</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/burritosElBurro?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/burritoselBurro?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="itson"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

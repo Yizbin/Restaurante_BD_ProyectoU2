@@ -20,7 +20,7 @@ import javax.persistence.Table;
  * @author sonic
  */
 @Entity
-@Table(name = "productoOcupaIngrediente")
+@Table(name = "producto_Ocupa_Ingrediente")
 public class ProductoOcupaIngrediente implements Serializable {
     
     @Id

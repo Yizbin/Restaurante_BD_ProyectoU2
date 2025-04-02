@@ -5,7 +5,7 @@
 package moduloProductosDAO;
 
 import Exception.PersistenciaException;
-import moduloProductosEntidades.Producto;
+import ModuloProductosEntidades.Producto;
 
 /**
  *
