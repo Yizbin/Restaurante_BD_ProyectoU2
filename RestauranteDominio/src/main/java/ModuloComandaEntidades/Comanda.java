@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package moduloComandaEntidades;
+package ModuloComandaEntidades;
 
 import Enums.Estado;
 import java.io.Serializable;
@@ -22,7 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import moduloClienteEntidades.ClienteFrecuente;
+import ModuloClientesEntidades.ClienteFrecuente;
 
 /**
  *
