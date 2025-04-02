@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import ModuloProductosEntidades.ProductoOcupaIngrediente;
+import javax.persistence.CascadeType;
 
 /**
  *
@@ -36,7 +37,7 @@ public class Ingrediente implements Serializable {
     @Column(name = "unidad_medida", nullable = false, length = 50)
     private String unidadMedida;
 
-    @OneToMany
+    @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL)
     private List<ProductoOcupaIngrediente> ingredientes = new ArrayList<>();
 
     public Ingrediente() {

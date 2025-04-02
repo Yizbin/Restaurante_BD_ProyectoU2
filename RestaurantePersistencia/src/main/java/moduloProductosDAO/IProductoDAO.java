@@ -4,10 +4,13 @@
  */
 package moduloProductosDAO;
 
+import Exception.PersistenciaException;
+import moduloProductosEntidades.Producto;
+
 /**
  *
  * @author sonic
  */
 public interface IProductoDAO {
-    
+    public Producto registrarProducto(Producto producto) throws PersistenciaException;
 }

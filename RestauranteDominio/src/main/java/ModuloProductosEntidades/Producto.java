@@ -7,6 +7,7 @@ package ModuloProductosEntidades;
 import Enums.EstadoProducto;
 import Enums.TipoPlatillo;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,15 +18,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author sonic
  */
 @Entity
+@Table(name = "productos")
 public class Producto implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_Producto", nullable = false)
     private Long id;
     
@@ -47,28 +50,28 @@ public class Producto implements Serializable {
     private String descripcion;
     
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<ProductoOcupaIngrediente> ingredientes;
+    private List<ProductoOcupaIngrediente> productos = new ArrayList<>();
 
     public Producto() {
     }
 
-    public Producto(Long id, String nombre, Double precio, TipoPlatillo tipo, EstadoProducto estadoProducto, String descripcion, List<ProductoOcupaIngrediente> ingredientes) {
+    public Producto(Long id, String nombre, Double precio, TipoPlatillo tipo, EstadoProducto estadoProducto, String descripcion, List<ProductoOcupaIngrediente> productos) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
         this.estadoProducto = estadoProducto;
         this.descripcion = descripcion;
-        this.ingredientes = ingredientes;
+        this.productos = productos;
     }
 
-    public Producto(String nombre, Double precio, TipoPlatillo tipo, EstadoProducto estadoProducto, String descripcion, List<ProductoOcupaIngrediente> ingredientes) {
+    public Producto(String nombre, Double precio, TipoPlatillo tipo, EstadoProducto estadoProducto, String descripcion, List<ProductoOcupaIngrediente> productos) {
         this.nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
         this.estadoProducto = estadoProducto;
         this.descripcion = descripcion;
-        this.ingredientes = ingredientes;
+        this.productos = productos;
     }
 
     public Long getId() {
@@ -119,17 +122,17 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<ProductoOcupaIngrediente> getIngredientes() {
-        return ingredientes;
+    public List<ProductoOcupaIngrediente> getProductos() {
+        return productos;
     }
 
-    public void setIngredientes(List<ProductoOcupaIngrediente> ingredientes) {
-        this.ingredientes = ingredientes;
+    public void setProductos(List<ProductoOcupaIngrediente> productos) {
+        this.productos = productos;
     }
 
     @Override
     public String toString() {
-        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + ", estadoProducto=" + estadoProducto + ", descripcion=" + descripcion + ", ingredientes=" + ingredientes + '}';
+        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + ", estadoProducto=" + estadoProducto + ", descripcion=" + descripcion + ", productos=" + productos + '}';
     }
 
     

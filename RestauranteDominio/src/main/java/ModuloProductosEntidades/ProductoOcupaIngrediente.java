@@ -20,12 +20,12 @@ import javax.persistence.Table;
  * @author sonic
  */
 @Entity
-@Table(name = "producto_ocupa_ingrediente")
+@Table(name = "productoOcupaIngrediente")
 public class ProductoOcupaIngrediente implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_ProductoOcupaIngrediente", nullable = false)
+    @Column(name = "id_ProductoOcupaIngrediente")
     private Long id;
 
     @ManyToOne

@@ -5,6 +5,7 @@
 package ModuloProductosDTOs;
 
 import ModuloIngredientesDTOs.IngredienteDTO;
+import ModuloIngredientesEntidades.Ingrediente;
 import java.util.List;
 
 /**
@@ -16,12 +17,12 @@ public class ProductoDTO {
     private Double precio;
     private String tipo;
     private String descripcion;
-    private List<IngredienteDTO> ingredientes;
+    private List<Ingrediente> ingredientes;
 
     public ProductoDTO() {
     }
 
-    public ProductoDTO(String nombre, Double precio, String tipo, String descripcion, List<IngredienteDTO> ingredientes) {
+    public ProductoDTO(String nombre, Double precio, String tipo, String descripcion, List<Ingrediente> ingredientes) {
         this.nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
@@ -61,11 +62,11 @@ public class ProductoDTO {
         this.descripcion = descripcion;
     }
 
-    public List<IngredienteDTO> getIngredientes() {
+    public List<Ingrediente> getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(List<IngredienteDTO> ingredientes) {
+    public void setIngredientes(List<Ingrediente> ingredientes) {
         this.ingredientes = ingredientes;
     }
 
