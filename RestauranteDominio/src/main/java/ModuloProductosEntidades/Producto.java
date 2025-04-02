@@ -4,6 +4,7 @@
  */
 package moduloProductosEntidades;
 
+import Enums.EstadoProducto;
 import Enums.TipoPlatillo;
 import java.io.Serializable;
 import java.util.List;
@@ -38,6 +39,10 @@ public class Producto implements Serializable {
     @Column(name = "tipo", nullable = false)
     private TipoPlatillo tipo;
     
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false)
+    private EstadoProducto estadoProducto;
+    
     @Column(name = "descripcion", nullable = false, length = 200)
     private String descripcion;
     
@@ -47,26 +52,24 @@ public class Producto implements Serializable {
     public Producto() {
     }
 
-    public Producto(Long id, String nombre, Double precio, TipoPlatillo tipo, String descripcion, List<ProductoOcupaIngrediente> ingredientes) {
+    public Producto(Long id, String nombre, Double precio, TipoPlatillo tipo, EstadoProducto estadoProducto, String descripcion, List<ProductoOcupaIngrediente> ingredientes) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
+        this.estadoProducto = estadoProducto;
         this.descripcion = descripcion;
         this.ingredientes = ingredientes;
     }
 
-    public Producto(String nombre, Double precio, TipoPlatillo tipo, String descripcion, List<ProductoOcupaIngrediente> ingredientes) {
+    public Producto(String nombre, Double precio, TipoPlatillo tipo, EstadoProducto estadoProducto, String descripcion, List<ProductoOcupaIngrediente> ingredientes) {
         this.nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
+        this.estadoProducto = estadoProducto;
         this.descripcion = descripcion;
         this.ingredientes = ingredientes;
     }
-    
-    
-    
-    
 
     public Long getId() {
         return id;
@@ -100,6 +103,14 @@ public class Producto implements Serializable {
         this.tipo = tipo;
     }
 
+    public EstadoProducto getEstadoProducto() {
+        return estadoProducto;
+    }
+
+    public void setEstadoProducto(EstadoProducto estadoProducto) {
+        this.estadoProducto = estadoProducto;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -118,8 +129,10 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + ", descripcion=" + descripcion + ", ingredientes=" + ingredientes + '}';
+        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + ", estadoProducto=" + estadoProducto + ", descripcion=" + descripcion + ", ingredientes=" + ingredientes + '}';
     }
+
+    
     
     
     
