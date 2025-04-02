@@ -4,10 +4,25 @@
  */
 package moduloIngredientesDAO;
 
+import Exception.PersistenciaException;
+import ModuloIngredientesEntidades.Ingrediente;
+import java.util.List;
+
 /**
  *
- * @author sonic
+ * @author Abraham Coronel Bringas
  */
 public interface IingredienteDAO {
+
+    public Ingrediente registrarIngrediente(Ingrediente ingrediente) throws PersistenciaException;
     
+    public boolean existeIngrediente(String nombre, String unidadMedida);
+    
+    public boolean comandaActivaConIngrediente(Long idIngrediente);
+
+    public Ingrediente actualizarIngrediente(Ingrediente ingrediente) throws PersistenciaException;
+
+    public boolean eliminarIngrediente(Long id) throws PersistenciaException;
+
+    public List<Ingrediente> buscarPorTodos() throws PersistenciaException;
 }

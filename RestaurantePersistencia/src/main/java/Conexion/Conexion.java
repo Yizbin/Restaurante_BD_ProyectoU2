@@ -13,7 +13,7 @@ import javax.persistence.Persistence;
  * @author sonic
  */
 public class Conexion {
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU");
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("ConexionPU");
     
     public static EntityManager crearConexion() {
         return emf.createEntityManager();
