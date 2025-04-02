@@ -89,7 +89,7 @@ public class IngredienteDAO implements IingredienteDAO {
             em.getTransaction().rollback();
             throw new PersistenciaException("No se pudo eliminar el ingrediente: " + e.getMessage());
         } finally {
-            em.close();
+            Conexion.cerrarConexion();
         }
     }
 
@@ -101,7 +101,7 @@ public class IngredienteDAO implements IingredienteDAO {
         } catch (Exception e) {
             throw new PersistenciaException("Error al buscar todos los ingredientes: " + e.getMessage());
         } finally {
-            em.close();
+            Conexion.cerrarConexion();
         }
     }
 
@@ -140,7 +140,7 @@ public class IngredienteDAO implements IingredienteDAO {
             em.getTransaction().rollback();
             throw new PersistenciaException("No se pudo actualizar el stock del ingrediente: " + e.getMessage());
         } finally {
-            em.close();
+            Conexion.cerrarConexion();
         }
     }
 
