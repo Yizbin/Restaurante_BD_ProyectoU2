@@ -4,9 +4,11 @@
  */
 package ModuloIngredientesDTOs;
 
+import Enums.UnidadMedida;
+
 /**
  *
- * @author PC Gamer
+ * @author Abraham Coronel Bringas
  */
 public class IngredienteDTO {
 
@@ -14,9 +16,9 @@ public class IngredienteDTO {
 
     private Integer stock;
 
-    private String unidadMedida;
+    private UnidadMedida unidadMedida;
 
-    public IngredienteDTO(String nombre, Integer stock, String unidadMedida) {
+    public IngredienteDTO(String nombre, Integer stock, UnidadMedida unidadMedida) {
         this.nombre = nombre;
         this.stock = stock;
         this.unidadMedida = unidadMedida;
@@ -41,11 +43,11 @@ public class IngredienteDTO {
         this.stock = stock;
     }
 
-    public String getUnidadMedida() {
+    public UnidadMedida getUnidadMedida() {
         return unidadMedida;
     }
 
-    public void setUnidadMedida(String unidadMedida) {
+    public void setUnidadMedida(UnidadMedida unidadMedida) {
         this.unidadMedida = unidadMedida;
     }
 
