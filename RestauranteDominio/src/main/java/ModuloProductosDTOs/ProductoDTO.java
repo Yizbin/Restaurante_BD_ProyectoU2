@@ -4,7 +4,6 @@
  */
 package ModuloProductosDTOs;
 
-import ModuloIngredientesDTOs.IngredienteDTO;
 import ModuloIngredientesEntidades.Ingrediente;
 import java.util.List;
 
@@ -28,6 +27,13 @@ public class ProductoDTO {
         this.tipo = tipo;
         this.descripcion = descripcion;
         this.ingredientes = ingredientes;
+    }
+
+    public ProductoDTO(String nombre, Double precio, String tipo, String descripcion) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.tipo = tipo;
+        this.descripcion = descripcion;
     }
 
     public String getNombre() {
@@ -70,10 +76,8 @@ public class ProductoDTO {
         this.ingredientes = ingredientes;
     }
 
-    @Override
-    public String toString() {
-        return "ProductoDTO{" + "nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + ", descripcion=" + descripcion + ", ingredientes=" + ingredientes + '}';
-    }
+
+    
     
     
 }

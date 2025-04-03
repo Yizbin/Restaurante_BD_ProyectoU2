@@ -46,6 +46,14 @@ public class ProductoOcupaIngrediente implements Serializable {
         this.cantidadRequerida = cantidadRequerida;
     }
 
+    public ProductoOcupaIngrediente(Producto producto, Ingrediente ingrediente, int cantidadRequerida) {
+        this.producto = producto;
+        this.ingrediente = ingrediente;
+        this.cantidadRequerida = cantidadRequerida;
+    }
+    
+    
+
     public ProductoOcupaIngrediente() {
     }
     
