@@ -7,6 +7,7 @@ package PruebasDominio;
 import Enums.Estado;
 import Enums.EstadoProducto;
 import Enums.TipoPlatillo;
+import Enums.UnidadMedida;
 import ModuloClientesEntidades.Cliente;
 import ModuloClientesEntidades.ClienteFrecuente;
 import ModuloComandaEntidades.Comanda;
@@ -66,10 +67,10 @@ public class PruebasDominio {
 
         //TABLA INGREDIENTES
         em.getTransaction().begin();
-        Ingrediente ingrediente = new Ingrediente("tortillas harina", 10, "piezas");
-        Ingrediente ingrediente1 = new Ingrediente("carne de burro", 10, "gr");
-        Ingrediente ingrediente2 = new Ingrediente("agua", 1000, "ml");
-        Ingrediente ingrediente3 = new Ingrediente("jamaica", 100, "piezas");
+        Ingrediente ingrediente = new Ingrediente("tortillas harina", 10, UnidadMedida.PIEZAS);
+        Ingrediente ingrediente1 = new Ingrediente("carne de burro", 10, UnidadMedida.GRAMOS);
+        Ingrediente ingrediente2 = new Ingrediente("agua", 1000, UnidadMedida.MILILITROS);
+        Ingrediente ingrediente3 = new Ingrediente("jamaica", 100, UnidadMedida.PIEZAS);
         em.persist(ingrediente);
         em.persist(ingrediente1);
         em.persist(ingrediente2);
@@ -119,14 +120,10 @@ public class PruebasDominio {
         producto1.getProductos().add(prodCarneBurro);
         producto1.getProductos().add(prodTortilla);
 
-        ingrediente.getIngredientes().add(prodTortilla);
-        ingrediente1.getIngredientes().add(prodCarneBurro);
 
         producto2.getProductos().add(prodAgua);
         producto2.getProductos().add(prodJamaica);
 
-        ingrediente2.getIngredientes().add(prodAgua);
-        ingrediente3.getIngredientes().add(prodJamaica);
 
         em.persist(prodCarneBurro);
         em.persist(prodTortilla);
