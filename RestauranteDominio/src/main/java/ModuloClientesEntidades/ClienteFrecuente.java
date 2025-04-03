@@ -4,11 +4,15 @@
  */
 package ModuloClientesEntidades;
 
+import ModuloComandaEntidades.Comanda;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 
@@ -17,9 +21,13 @@ import javax.persistence.Table;
  * @author isaac
  */
 @Entity
-@Table(name = "cliente_Frecuente")
+@Table(name = "clientes_frecuentes")
+@PrimaryKeyJoinColumn( name = "id_cliente_frecuente")
 @DiscriminatorValue("1")
-public class ClienteFrecuente extends Cliente implements Serializable {
+
+public class ClienteFrecuente extends Cliente  {
+    
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "puntos", nullable = false)
     private Integer puntos;
@@ -28,29 +36,39 @@ public class ClienteFrecuente extends Cliente implements Serializable {
     private double gastoAcumulado;
 
     @Column(name = "visitas", nullable = false)
-    private double visitas;
+    private Integer visitas;
+    
+    @OneToMany ( mappedBy = "clienteFrecuente")
+    private List<Comanda> comandas;
 
     public ClienteFrecuente() {
+        super();
     }
-
-    public ClienteFrecuente(Integer puntos, double gastoAcumulado, double visitas) {
+    
+    //constructor con lo de ClienteFrecuente
+    public ClienteFrecuente(Integer puntos, Double gastoAcumulado, Integer visitas, List<Comanda> comandas) {
         this.puntos = puntos;
         this.gastoAcumulado = gastoAcumulado;
         this.visitas = visitas;
+        this.comandas = comandas;
     }
+    //constructor con cleinte y  clienteFrecuente ( SIN ID )
 
-    public ClienteFrecuente(Integer puntos, double gastoAcumulado, double visitas, Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro, int clienteTipo) {
-        super(id, nombre, apellidoPaterno, apellidoMaterno, telefono, correo, fechaRegistro, clienteTipo);
+    public ClienteFrecuente(Integer puntos, double gastoAcumulado, Integer visitas, List<Comanda> comandas, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
+        super(nombre, apellidoPaterno, apellidoMaterno, telefono, correo, fechaRegistro);
         this.puntos = puntos;
         this.gastoAcumulado = gastoAcumulado;
         this.visitas = visitas;
+        this.comandas = comandas;
     }
+    // constructor con TODO de los dos clientes
 
-    public ClienteFrecuente(Integer puntos, double gastoAcumulado, double visitas, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro, int clienteTipo) {
-        super(nombre, apellidoPaterno, apellidoMaterno, telefono, correo, fechaRegistro, clienteTipo);
+    public ClienteFrecuente(Integer puntos, double gastoAcumulado, Integer visitas, List<Comanda> comandas, Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
+        super(id, nombre, apellidoPaterno, apellidoMaterno, telefono, correo, fechaRegistro);
         this.puntos = puntos;
         this.gastoAcumulado = gastoAcumulado;
         this.visitas = visitas;
+        this.comandas = comandas;
     }
 
     public Integer getPuntos() {
@@ -69,14 +87,33 @@ public class ClienteFrecuente extends Cliente implements Serializable {
         this.gastoAcumulado = gastoAcumulado;
     }
 
-    public double getVisitas() {
+    public Integer getVisitas() {
         return visitas;
     }
 
-    public void setVisitas(double visitas) {
+    public void setVisitas(Integer visitas) {
         this.visitas = visitas;
     }
+
+    public List<Comanda> getComandas() {
+        return comandas;
+    }
+
+    public void setComandas(List<Comanda> comandas) {
+        this.comandas = comandas;
+    }
+
     
+    
+    
+    
+    
+
+   
+
+  
+    
+
     
 
 }

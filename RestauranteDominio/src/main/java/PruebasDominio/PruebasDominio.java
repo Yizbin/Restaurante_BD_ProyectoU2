@@ -7,6 +7,7 @@ package PruebasDominio;
 import Enums.Estado;
 import Enums.EstadoProducto;
 import Enums.TipoPlatillo;
+import ModuloClientesEntidades.Cliente;
 import ModuloClientesEntidades.ClienteFrecuente;
 import ModuloComandaEntidades.Comanda;
 import ModuloComandaEntidades.DetalleComanda;
@@ -33,7 +34,7 @@ public class PruebasDominio {
 
     /**
      * @param dateTime
-     * @return 
+     * @return
      */
     public static synchronized String generarFolio(LocalDateTime dateTime) {
         // Se extrae la fecha (sin la hora) del objeto LocalDateTime
@@ -137,35 +138,42 @@ public class PruebasDominio {
         mesa1.setNumeroMesa(1);
 
         em.persist(mesa1);
-
+        //TABLA CLIENTES
+      /*  
+        Cliente clienteLoco = new Cliente();
+        clienteLoco.setNombre("Abraham");
+        clienteLoco.setApellidoPaterno("Kota");
+        clienteLoco.setApellidoMaterno("Inzunza");
+        clienteLoco.setId(1L);
+        clienteLoco.setCorreo("abrahamcbringas@gmail.com");
+        clienteLoco.setFechaRegistro(new Date());
+        clienteLoco.setTelefono("6432356663");
+        em.persist(clienteLoco);
+     */   
         //TABLA CLIENTES FRECUENTES
-//        ClienteFrecuente cliente1 = new ClienteFrecuente();
-//        cliente1.setNombre("Gilberto");
-//        cliente1.setApellidoPaterno("paredes");
-//        cliente1.setApellidoMaterno("Flores");
-//        cliente1.setClienteTipo(1);
-//        cliente1.setCorreo("sonic15622@gmail.com");
-//        cliente1.setFechaRegistro(new Date());
-//        cliente1.setGastoAcumulado(0);
-//        cliente1.setPuntos(0);
-//        cliente1.setVisitas(0);
-//        cliente1.setTelefono("6442595242");
-        
-//        em.persist(cliente1);
+        ClienteFrecuente cliente1 = new ClienteFrecuente();
+        cliente1.setNombre("Gilberto");
+        cliente1.setApellidoPaterno("paredes");
+        cliente1.setApellidoMaterno("Flores");
+        cliente1.setId(2L);
+        cliente1.setCorreo("sonic15622@gmail.com");
+        cliente1.setFechaRegistro(new Date());
+        cliente1.setGastoAcumulado(0.0);
+        cliente1.setPuntos(0);
+        cliente1.setVisitas(0);
+        cliente1.setTelefono("6442595242");
 
+        em.persist(cliente1);
         //TABLA COMANDAS
         LocalDateTime fechaComanda1 = LocalDateTime.now();
         String folio1 = generarFolio(fechaComanda1);
-        
+
         Comanda comanda1 = new Comanda();
 //        comanda1.setClienteFrecuente(cliente1);
         comanda1.setEstado(Estado.ABIERTA);
         comanda1.setFechaHora(fechaComanda1);
         comanda1.setFolio(folio1);
         comanda1.setMesa(mesa1);
-        
-        
-        
 
         //TABLA DETALLE COMANDA
         DetalleComanda detalle1 = new DetalleComanda();
@@ -175,7 +183,7 @@ public class PruebasDominio {
         detalle1.setPrecioUnitario(detalle1.getProducto().getPrecio());
         detalle1.setImporteProducto(detalle1.getCantidadUnidades() * detalle1.getPrecioUnitario());
         detalle1.setComanda(comanda1);
-        
+
         DetalleComanda detalle2 = new DetalleComanda();
         detalle2.setProducto(producto2);
         detalle2.setCantidadUnidades(1);
@@ -183,15 +191,14 @@ public class PruebasDominio {
         detalle2.setPrecioUnitario(detalle2.getProducto().getPrecio());
         detalle2.setImporteProducto(detalle2.getCantidadUnidades() * detalle2.getPrecioUnitario());
         detalle2.setComanda(comanda1);
-        
+
         comanda1.getDetalles().add(detalle1);
         comanda1.getDetalles().add(detalle2);
-        
+
         em.persist(detalle1);
         em.persist(detalle2);
         em.persist(comanda1);
 
-        
         em.getTransaction().commit();
         //////////////////////////////////
 

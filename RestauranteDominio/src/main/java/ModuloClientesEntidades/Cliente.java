@@ -16,13 +16,15 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author isaac
  */
 @Entity
-@Table(name = "Cliente")
+@Table(name = "clientes")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "cliente_tipo", discriminatorType
         = DiscriminatorType.INTEGER)
@@ -42,22 +44,23 @@ public class Cliente implements Serializable {
     @Column(name = "apellido_materno", nullable = true, length = 100)
     private String apellidoMaterno;
 
-    @Column(name = "telefono", nullable = false, length = 10)
+    @Column(name = "telefono", nullable = false, length = 10, unique = true)
     private String telefono;
 
     @Column(name = "correo", nullable = true, length = 100)
     private String correo;
 
     @Column(name = "fecha_registro", nullable = false, length = 100)
+    @Temporal ( TemporalType.DATE)
     private Date fechaRegistro;
 
-    @Column(name = "cliente_tipo")
-    private int clienteTipo;
+ //   @Column(name = "cliente_tipo")
+  //  private int clienteTipo; ESTO NO VA PQ SE MANJEA SOLO CON JPA
 
     public Cliente() {
     }
 
-    public Cliente(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro, int clienteTipo) {
+    public Cliente(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -65,17 +68,17 @@ public class Cliente implements Serializable {
         this.telefono = telefono;
         this.correo = correo;
         this.fechaRegistro = fechaRegistro;
-        this.clienteTipo = clienteTipo;
+        
     }
 
-    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro, int clienteTipo) {
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.telefono = telefono;
         this.correo = correo;
         this.fechaRegistro = fechaRegistro;
-        this.clienteTipo = clienteTipo;
+        
     }
 
     public String getNombre() {
@@ -126,13 +129,7 @@ public class Cliente implements Serializable {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public int getClienteTipo() {
-        return clienteTipo;
-    }
-
-    public void setClienteTipo(int clienteTipo) {
-        this.clienteTipo = clienteTipo;
-    }
+ 
 
     public Long getId() {
         return id;

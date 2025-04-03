@@ -12,6 +12,8 @@ import javax.persistence.Column;
  * @author isaac
  */
 public class ClienteFrecuenteDTO {
+    
+    private static final long serialVersionUID = 1L;
 
     private Long id;
     private String nombre;
@@ -23,12 +25,12 @@ public class ClienteFrecuenteDTO {
     private int clienteTipo;
     private Integer puntos;
     private double gastoAcumulado;
-    private double visitas;
+    private Integer visitas;
 
     public ClienteFrecuenteDTO() {
     }
 
-    public ClienteFrecuenteDTO(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro, int clienteTipo, Integer puntos, double gastoAcumulado, double visitas) {
+    public ClienteFrecuenteDTO(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro, int clienteTipo, Integer puntos, double gastoAcumulado, Integer visitas) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -126,7 +128,7 @@ public class ClienteFrecuenteDTO {
         return visitas;
     }
 
-    public void setVisitas(double visitas) {
+    public void setVisitas(Integer visitas) {
         this.visitas = visitas;
     }
     
