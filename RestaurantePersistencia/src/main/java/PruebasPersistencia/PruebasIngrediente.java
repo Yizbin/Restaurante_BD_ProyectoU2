@@ -4,6 +4,7 @@
  */
 package PruebasPersistencia;
 
+import Enums.UnidadMedida;
 import Exception.PersistenciaException;
 import ModuloIngredientesEntidades.Ingrediente;
 import moduloIngredientesDAO.IingredienteDAO;
@@ -22,10 +23,10 @@ public class PruebasIngrediente {
         IingredienteDAO ingredienteDAO = IngredienteDAO.getInstanceDAO();
         
         //INGREDIENTES PRUEBAS
-        Ingrediente ingrediente = new Ingrediente("tortillas harina", 10, "piezas");
-        Ingrediente ingrediente1 = new Ingrediente("carne de burro", 10, "gr");
-        Ingrediente ingrediente2 = new Ingrediente("agua", 1000, "ml");
-        Ingrediente ingrediente3 = new Ingrediente("jamaica", 100, "piezas");
+        Ingrediente ingrediente = new Ingrediente("tortillas harina", 10, UnidadMedida.PIEZAS);
+        Ingrediente ingrediente1 = new Ingrediente("carne de burro", 10, UnidadMedida.GRAMOS);
+        Ingrediente ingrediente2 = new Ingrediente("agua", 1000, UnidadMedida.MILILITROS);
+        Ingrediente ingrediente3 = new Ingrediente("jamaica", 100, UnidadMedida.PIEZAS);
         
         ingredienteDAO.registrarIngrediente(ingrediente);
         ingredienteDAO.registrarIngrediente(ingrediente1);

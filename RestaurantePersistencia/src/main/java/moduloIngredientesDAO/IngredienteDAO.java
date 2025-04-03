@@ -5,6 +5,7 @@
 package moduloIngredientesDAO;
 
 import Conexion.Conexion;
+import Enums.UnidadMedida;
 import Exception.PersistenciaException;
 import ModuloIngredientesEntidades.Ingrediente;
 import java.util.List;
@@ -106,9 +107,12 @@ public class IngredienteDAO implements IingredienteDAO {
     }
 
     @Override
-    public boolean existeIngrediente(String nombre, String unidadMedida) {
+    public boolean existeIngrediente(String nombre, UnidadMedida unidadMedida) {
         String consulta = "SELECT COUNT(i) FROM Ingrediente i WHERE i.nombre = :nombre AND i.unidadMedida = :unidadMedida";
-        Long count = Conexion.crearConexion().createQuery(consulta, Long.class).setParameter("nombre", nombre).setParameter("unidadMedida", unidadMedida).getSingleResult();
+        Long count = Conexion.crearConexion().createQuery(consulta, Long.class)
+                .setParameter("nombre", nombre)
+                .setParameter("unidadMedida", unidadMedida)
+                .getSingleResult();
         return count > 0;
     }
 

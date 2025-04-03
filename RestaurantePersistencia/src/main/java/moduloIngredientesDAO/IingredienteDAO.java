@@ -4,6 +4,7 @@
  */
 package moduloIngredientesDAO;
 
+import Enums.UnidadMedida;
 import Exception.PersistenciaException;
 import ModuloIngredientesEntidades.Ingrediente;
 import java.util.List;
@@ -16,7 +17,7 @@ public interface IingredienteDAO {
 
     public Ingrediente registrarIngrediente(Ingrediente ingrediente) throws PersistenciaException;
     
-    public boolean existeIngrediente(String nombre, String unidadMedida);
+    public boolean existeIngrediente(String nombre, UnidadMedida unidadMedida);
     
     public boolean comandaActivaConIngrediente(Long idIngrediente);
     
