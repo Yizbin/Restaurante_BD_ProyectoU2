@@ -6,6 +6,8 @@ package moduloProductosDAO;
 
 import Conexion.Conexion;
 import Enums.EstadoProducto;
+import Enums.TipoPlatillo;
+import Enums.UnidadMedida;
 import Exception.PersistenciaException;
 import ModuloIngredientesEntidades.Ingrediente;
 import ModuloProductosDTOs.IngredienteProductoDTO;
@@ -26,7 +28,7 @@ public class ProductoDAO implements IProductoDAO {
     private ProductoDAO() {
     }
 
-    public static ProductoDAO getInstance() {
+    public static ProductoDAO getInstanceDAO() {
         if (instanceProductoDAO == null) {
             instanceProductoDAO = new ProductoDAO();
         }
@@ -39,19 +41,25 @@ public class ProductoDAO implements IProductoDAO {
         try {
             em.getTransaction().begin();
             em.persist(producto);
+            em.flush();
 
             if (producto.getId() == null) {
                 throw new PersistenciaException("Error: No se generó un ID para el producto.");
             }
 
+            if (producto.getProductos().isEmpty()) {
+                throw new PersistenciaException("Error: No se puede registrar un producto sin ingredientes.");
+            }
+
             em.getTransaction().commit();
             return producto;
         } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
             em.getTransaction().rollback();
-            throw new PersistenciaException("El producto no se pudo registrar");
+        }
+            throw new PersistenciaException("El producto no se pudo registrar" + e.getMessage());
         } finally {
             em.close();
-            Conexion.cerrarConexion();
         }
     }
 
@@ -68,97 +76,47 @@ public class ProductoDAO implements IProductoDAO {
             }
 
             producto.setEstadoProducto(EstadoProducto.DESHABILITADO);
+            em.getTransaction().begin();
             em.merge(producto);
             em.getTransaction().commit();
         } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
             em.getTransaction().rollback();
-            throw new PersistenciaException("El producto no se pudo deshabilitar");
+        }
+            throw new PersistenciaException("El producto no se pudo deshabilitar" + e.getMessage());
         } finally {
             em.close();
-            Conexion.cerrarConexion();
         }
 
     }
 
     @Override
-    public List<Producto> obtenerProductos() throws PersistenciaException {
+    public void habilitarProducto(Producto producto) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            return em.createQuery("SELECT p FROM Producto p WHERE p.estadoProducto = :estado", Producto.class)
-                    .setParameter("estado", EstadoProducto.HABILITADO)
-                    .getResultList();
+            if (producto == null) {
+                throw new PersistenciaException("Producto no existente");
+            }
+
+            if (producto.getEstadoProducto() == EstadoProducto.HABILITADO) {
+                throw new PersistenciaException("El producto ya está habilitado");
+            }
+
+            producto.setEstadoProducto(EstadoProducto.HABILITADO);
+            em.getTransaction().begin();
+            em.merge(producto);
+            em.getTransaction().commit();
         } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar productos" + e.getMessage());
+            if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
+            throw new PersistenciaException("El producto no se pudo deshabilitar " + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
 
     }
 
-    @Override
-    public List<Producto> obtenerProductosPorNombre(String nombre) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        try {
-            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre LIKE :nombre AND p.estadoProducto = :estado", Producto.class)
-                    .setParameter("nombre", "%" + nombre + "%")
-                    .setParameter("estado", EstadoProducto.HABILITADO)
-                    .getResultList();
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
-        } finally {
-            Conexion.cerrarConexion();
-        }
-
-    }
-
-    @Override
-    public Producto obtenerProductoPorNombre(String nombre) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        try {
-            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre LIKE :nombre AND p.estadoProducto = :estado", Producto.class)
-                    .setParameter("nombre", "%" + nombre + "%")
-                    .setParameter("estado", EstadoProducto.HABILITADO)
-                    .getSingleResult();
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
-        } finally {
-            Conexion.cerrarConexion();
-        }
-
-    }
-
-    @Override
-    public List<Producto> obtenerProductoPorNombreYTipo(String nombre, String tipo) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        try {
-            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre LIKE :nombre AND p.tipo LIKE :tipo p.estadoProducto = :estado", Producto.class)
-                    .setParameter("nombre", "%" + nombre + "%")
-                    .setParameter("tipo", "%" + tipo + "%")
-                    .setParameter("estado", EstadoProducto.HABILITADO)
-                    .getResultList();
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
-        } finally {
-            Conexion.cerrarConexion();
-        }
-
-    }
-
-    @Override
-    public List<Producto> obtenerProductosPorTipo(String tipo) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        try {
-            return em.createQuery("SELECT p FROM Producto p WHERE p.tipo LIKE :tipo AND p.estadoProducto = :estado", Producto.class)
-                    .setParameter("tipo", "%" + tipo + "%")
-                    .setParameter("estado", EstadoProducto.HABILITADO)
-                    .getResultList();
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
-        } finally {
-            Conexion.cerrarConexion();
-        }
-
-    }
 
     @Override
     public Producto actualizarProducto(Producto producto) throws PersistenciaException {
@@ -169,29 +127,33 @@ public class ProductoDAO implements IProductoDAO {
             em.getTransaction().commit();
             return actualizado;
         } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
             em.getTransaction().rollback();
+        }
             throw new PersistenciaException("No se pudo actualizar el producto: " + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
     }
 
     @Override
     public List<ProductoOcupaIngrediente> obtenerIngredientesDeUnProducto(String nombreProducto) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
-
         try {
-            return em.createQuery("SELECT i.nombre, poi.cantidadRequerida, i.unidadMedida "
-                    + "FROM ProductoOcupaIngrediente poi "
+            return em.createQuery(
+                    "SELECT poi "
+                    + // Selecciona la entidad completa, no campos sueltos
+                    "FROM ProductoOcupaIngrediente poi "
                     + "JOIN poi.ingrediente i "
                     + "JOIN poi.producto p "
-                    + "WHERE p.nombre = :nombreProducto", ProductoOcupaIngrediente.class)
+                    + "WHERE p.nombre = :nombreProducto",
+                    ProductoOcupaIngrediente.class)
                     .setParameter("nombreProducto", nombreProducto)
                     .getResultList();
         } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar los ingredientes de el producto " + e.getMessage());
+            throw new PersistenciaException("Error al buscar los ingredientes del producto: " + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
     }
 
@@ -212,9 +174,9 @@ public class ProductoDAO implements IProductoDAO {
 
             for (Object[] row : resultados) {
                 IngredienteProductoDTO ingredienteProductoDTO = new IngredienteProductoDTO(
-                        (String) row[1], // nombre del ingrediente
-                        (int) row[2], // cantidad requerida
-                        (String) row[3] // unidad de medida
+                        (String) row[0], // nombre del ingrediente
+                        (Double) row[1], // cantidad requerida
+                        ((UnidadMedida) row[2]).name() // unidad de medida
                 );
                 ingredientes.add(ingredienteProductoDTO);
             }
@@ -222,99 +184,27 @@ public class ProductoDAO implements IProductoDAO {
         } catch (Exception e) {
             throw new PersistenciaException("Error al buscar los ingredientes de el producto " + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
         return ingredientes;
     }
 
     @Override
-    public void agregarIngredienteAProducto(Long idProducto, Long idIngrediente,
-            int cantidad) throws PersistenciaException {
+    public Producto obtenerProductoPorNombre(String nombre) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            em.getTransaction().begin();
-
-            Producto producto = em.find(Producto.class, idProducto);
-            Ingrediente ingrediente = em.find(Ingrediente.class, idIngrediente);
-
-            if (producto == null || ingrediente == null) {
-                throw new PersistenciaException("Producto o Ingrediente no encontrado");
-            }
-
-            if (cantidad <= 0) {
-                throw new PersistenciaException("La cantidad debe ser mayor a cero");
-            }
-
-            boolean existeIngrediente = em.createQuery(
-                    "SELECT COUNT(poi) FROM ProductoOcupaIngrediente poi "
-                    + "WHERE poi.producto.id = :idProducto "
-                    + "AND poi.ingrediente.id = :idIngrediente", Long.class)
-                    .setParameter("idProducto", idProducto)
-                    .setParameter("idIngrediente", idIngrediente)
-                    .getSingleResult() > 0;
-
-            if (existeIngrediente) {
-                throw new PersistenciaException("El ingrediente ya esta asignado al producto");
-            }
-
-            ProductoOcupaIngrediente ingredienteProducto = new ProductoOcupaIngrediente();
-            ingredienteProducto.setIngrediente(ingrediente);
-            ingredienteProducto.setProducto(producto);
-            ingredienteProducto.setCantidadRequerida(cantidad);
-
-            // 3. Actualizar relaciones bidireccionales
-            producto.getProductos().add(ingredienteProducto);
-            em.persist(ingredienteProducto);
-
-            em.getTransaction().commit();
-
+            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre = :nombre", Producto.class)
+                    .setParameter("nombre", nombre)
+                    .getSingleResult();
         } catch (Exception e) {
-            em.getTransaction().rollback();
-            throw new PersistenciaException("Error al asignar ingrediente " + e.getMessage());
+            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
+
     }
 
     @Override
-    public void actualizarCantidadRequeridaDeUnIngrediente(Long idProducto, Long idIngrediente,
-            int nuevaCantidad) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        try {
-            em.getTransaction().begin();
-
-            Producto producto = em.find(Producto.class, idProducto);
-            Ingrediente ingrediente = em.find(Ingrediente.class, idIngrediente);
-
-            if (producto == null || ingrediente == null) {
-                throw new PersistenciaException("Producto o Ingrediente no encontrado");
-            }
-
-            if (nuevaCantidad <= 0) {
-                throw new PersistenciaException("La cantidad debe ser mayor a cero");
-            }
-
-            ProductoOcupaIngrediente ingredienteSeleccionado = em.createQuery(
-                    "SELECT poi FROM ProductoOcupaIngrediente poi "
-                    + "WHERE poi.producto.id = :idProducto "
-                    + "AND poi.ingrediente.id = :idIngrediente", ProductoOcupaIngrediente.class)
-                    .setParameter("idProducto", idProducto)
-                    .setParameter("idIngrediente", idIngrediente)
-                    .getSingleResult();
-
-            ingredienteSeleccionado.setCantidadRequerida(nuevaCantidad);
-
-            em.getTransaction().commit();
-
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-            throw new PersistenciaException("Error al actualizar cantidad requerida " + e.getMessage());
-        } finally {
-            Conexion.cerrarConexion();
-        }
-
-    }
-
     public Producto buscarProductoPorId(Long idProducto) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
@@ -333,8 +223,135 @@ public class ProductoDAO implements IProductoDAO {
         } catch (Exception e) {
             throw new PersistenciaException("No se pudo obtener el producto con el id " + idProducto + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
     }
+    
 
+    //METODOS PARA OBTENER ENTIDADES PRODUCTO EN EL MODULO DE COMANDAS------------------------------------------------------------------------------------
+    @Override
+    public List<Producto> obtenerProductosPorNombreEnComandas(String nombre) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre LIKE :nombre AND p.estadoProducto = :estado", Producto.class)
+                    .setParameter("nombre", "%" + nombre + "%")
+                    .setParameter("estado", EstadoProducto.HABILITADO)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public List<Producto> obtenerProductoPorNombreYTipoEnComandas(String nombre, TipoPlatillo tipo) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre LIKE :nombre AND p.tipo = :tipo AND p.estadoProducto = :estado", Producto.class)
+                    .setParameter("nombre", "%" + nombre + "%")
+                    .setParameter("tipo", tipo)
+                    .setParameter("estado", EstadoProducto.HABILITADO)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public List<Producto> obtenerProductosPorTipoEnComandas(TipoPlatillo tipo) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT p FROM Producto p WHERE p.tipo = :tipo AND p.estadoProducto = :estado", Producto.class)
+                    .setParameter("tipo", tipo)
+                    .setParameter("estado", EstadoProducto.HABILITADO)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public List<Producto> obtenerProductosEnComandas() throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT p FROM Producto p WHERE p.estadoProducto = :estado", Producto.class)
+                    .setParameter("estado", EstadoProducto.HABILITADO)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar productos" + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+    }
+
+    //METODOS PARA OBTENER ENTIDADES PRODUCTO EN EL MODULO DE CLIENTES------------------------------------------------------------------------------------
+    @Override
+    public List<Producto> obtenerProductos() throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT p FROM Producto p ", Producto.class)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar productos" + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public List<Producto> obtenerProductosPorNombre(String nombre) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre LIKE :nombre ", Producto.class)
+                    .setParameter("nombre", "%" + nombre + "%")
+                    .getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public List<Producto> obtenerProductoPorNombreYTipo(String nombre, TipoPlatillo tipo) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre LIKE :nombre AND p.tipo = :tipo ", Producto.class)
+                    .setParameter("nombre", "%" + nombre + "%")
+                    .setParameter("tipo", tipo)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public List<Producto> obtenerProductosPorTipo(TipoPlatillo tipo) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT p FROM Producto p WHERE p.tipo = :tipo", Producto.class)
+                    .setParameter("tipo", tipo)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar productos por nombre: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+    }
+    
 }

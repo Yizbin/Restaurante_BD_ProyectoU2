@@ -32,7 +32,7 @@ public class Producto implements Serializable {
     @Column(name = "id_Producto", nullable = false)
     private Long id;
     
-    @Column(name = "nombre", nullable = false, length = 100)
+    @Column(name = "nombre", nullable = false, length = 100, unique = true)
     private String nombre;
     
     @Column(name = "precio", nullable = false)
@@ -49,7 +49,7 @@ public class Producto implements Serializable {
     @Column(name = "descripcion", nullable = false, length = 200)
     private String descripcion;
     
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "producto", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<ProductoOcupaIngrediente> productos = new ArrayList<>();
 
     public Producto() {

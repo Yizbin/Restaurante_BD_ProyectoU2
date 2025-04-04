@@ -37,13 +37,13 @@ public class DetalleComanda implements Serializable {
     private String nota;
     
     @Column(name = "cantidad_unidades", nullable = false)
-    private int cantidadUnidades;
+    private Integer cantidadUnidades;
     
     @Column(name = "precio_unitario", nullable = false)
-    private double precioUnitario;
+    private Double precioUnitario;
     
     @Column(name = "importe_producto", nullable = false)
-    private double importeProducto;
+    private Double importeProducto;
 
     public DetalleComanda(Long id, Comanda comanda, Producto producto, String nota, int cantidadUnidades, double precioUnitario, double importeProducto) {
         this.id = id;

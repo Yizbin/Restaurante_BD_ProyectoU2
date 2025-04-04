@@ -37,27 +37,23 @@ public class ProductoOcupaIngrediente implements Serializable {
     private Ingrediente ingrediente;
     
     @Column(name = "cantidad_requerida", nullable = false)
-    private int cantidadRequerida;
+    private Double cantidadRequerida;
 
-    public ProductoOcupaIngrediente(Long id, Producto producto, Ingrediente ingrediente, int cantidadRequerida) {
+    public ProductoOcupaIngrediente(Long id, Producto producto, Ingrediente ingrediente, Double cantidadRequerida) {
         this.id = id;
         this.producto = producto;
         this.ingrediente = ingrediente;
         this.cantidadRequerida = cantidadRequerida;
     }
 
-    public ProductoOcupaIngrediente(Producto producto, Ingrediente ingrediente, int cantidadRequerida) {
+    public ProductoOcupaIngrediente(Producto producto, Ingrediente ingrediente, Double cantidadRequerida) {
         this.producto = producto;
         this.ingrediente = ingrediente;
         this.cantidadRequerida = cantidadRequerida;
     }
-    
-    
 
     public ProductoOcupaIngrediente() {
     }
-    
-    
 
     public Long getId() {
         return id;
@@ -83,11 +79,11 @@ public class ProductoOcupaIngrediente implements Serializable {
         this.ingrediente = ingrediente;
     }
 
-    public int getCantidadRequerida() {
+    public Double getCantidadRequerida() {
         return cantidadRequerida;
     }
 
-    public void setCantidadRequerida(int cantidadRequerida) {
+    public void setCantidadRequerida(Double cantidadRequerida) {
         this.cantidadRequerida = cantidadRequerida;
     }
 
@@ -95,6 +91,8 @@ public class ProductoOcupaIngrediente implements Serializable {
     public String toString() {
         return "ProductoOcupaIngrediente{" + "id=" + id + ", producto=" + producto + ", ingrediente=" + ingrediente + ", cantidadRequerida=" + cantidadRequerida + '}';
     }
+    
+    
     
     
     

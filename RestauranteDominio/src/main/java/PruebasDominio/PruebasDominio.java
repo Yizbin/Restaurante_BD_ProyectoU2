@@ -100,22 +100,22 @@ public class PruebasDominio {
         ProductoOcupaIngrediente prodCarneBurro = new ProductoOcupaIngrediente();
         prodCarneBurro.setProducto(producto1);
         prodCarneBurro.setIngrediente(ingrediente1);
-        prodCarneBurro.setCantidadRequerida(100);
+        prodCarneBurro.setCantidadRequerida(100.0);
 
         ProductoOcupaIngrediente prodTortilla = new ProductoOcupaIngrediente();
         prodTortilla.setProducto(producto1);
         prodTortilla.setIngrediente(ingrediente);
-        prodTortilla.setCantidadRequerida(2);
+        prodTortilla.setCantidadRequerida(2.0);
 
         ProductoOcupaIngrediente prodAgua = new ProductoOcupaIngrediente();
         prodAgua.setProducto(producto2);
         prodAgua.setIngrediente(ingrediente2);
-        prodAgua.setCantidadRequerida(500);
+        prodAgua.setCantidadRequerida(500.0);
 
         ProductoOcupaIngrediente prodJamaica = new ProductoOcupaIngrediente();
         prodJamaica.setProducto(producto2);
         prodJamaica.setIngrediente(ingrediente3);
-        prodJamaica.setCantidadRequerida(30);
+        prodJamaica.setCantidadRequerida(30.0);
 
         producto1.getProductos().add(prodCarneBurro);
         producto1.getProductos().add(prodTortilla);

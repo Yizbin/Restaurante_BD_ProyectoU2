@@ -10,16 +10,16 @@ package ModuloProductosDTOs;
  */
 public class IngredienteProductoDTO {
     private String nombreIngrediente;
-    private int cantidadRequerida;
+    private Double cantidadRequerida;
     private String unidadMedida;
 
-    public IngredienteProductoDTO(String nombreIngrediente, int cantidadRequerida, String unidadMedida) {
+    public IngredienteProductoDTO() {
+    }
+
+    public IngredienteProductoDTO(String nombreIngrediente, Double cantidadRequerida, String unidadMedida) {
         this.nombreIngrediente = nombreIngrediente;
         this.cantidadRequerida = cantidadRequerida;
         this.unidadMedida = unidadMedida;
-    }
-
-    public IngredienteProductoDTO() {
     }
 
     public String getNombreIngrediente() {
@@ -30,11 +30,11 @@ public class IngredienteProductoDTO {
         this.nombreIngrediente = nombreIngrediente;
     }
 
-    public int getCantidadRequerida() {
+    public Double getCantidadRequerida() {
         return cantidadRequerida;
     }
 
-    public void setCantidadRequerida(int cantidadRequerida) {
+    public void setCantidadRequerida(Double cantidadRequerida) {
         this.cantidadRequerida = cantidadRequerida;
     }
 
@@ -50,6 +50,8 @@ public class IngredienteProductoDTO {
     public String toString() {
         return "IngredienteProductoDTO{" + "nombreIngrediente=" + nombreIngrediente + ", cantidadRequerida=" + cantidadRequerida + ", unidadMedida=" + unidadMedida + '}';
     }
+
+    
     
     
 

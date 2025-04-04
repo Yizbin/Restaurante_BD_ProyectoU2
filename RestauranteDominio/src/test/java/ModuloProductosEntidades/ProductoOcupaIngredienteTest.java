@@ -22,7 +22,7 @@ class ProductoOcupaIngredienteTest {
         assertNull(productoIngrediente.getId());
         assertNull(productoIngrediente.getProducto());
         assertNull(productoIngrediente.getIngrediente());
-        assertEquals(0, productoIngrediente.getCantidadRequerida());
+        assertEquals(null, productoIngrediente.getCantidadRequerida());
     }
 
     @Test
@@ -33,7 +33,7 @@ class ProductoOcupaIngredienteTest {
             1L, 
             producto, 
             ingrediente, 
-            5
+            5.0
         );
         
         assertEquals(1L, productoIngrediente.getId());
@@ -49,7 +49,7 @@ class ProductoOcupaIngredienteTest {
         ProductoOcupaIngrediente productoIngrediente = new ProductoOcupaIngrediente(
             producto, 
             ingrediente, 
-            5
+            5.0
         );
         
         assertSame(producto, productoIngrediente.getProducto());
@@ -80,7 +80,7 @@ class ProductoOcupaIngredienteTest {
         assertEquals("Queso", productoIngrediente.getIngrediente().getNombre());
         
         // Test Cantidad
-        productoIngrediente.setCantidadRequerida(10);
+        productoIngrediente.setCantidadRequerida(10.0);
         assertEquals(10, productoIngrediente.getCantidadRequerida());
     }
 

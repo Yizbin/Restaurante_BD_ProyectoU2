@@ -50,7 +50,7 @@ public class Comanda implements Serializable {
     private List<DetalleComanda> detalles = new ArrayList<>();
 
     @Column(name = "total_acumulado", nullable = false)
-    private double totalAcumulado;
+    private Double totalAcumulado;
 
     @Column(name = "fecha_hora", nullable = false)
     private LocalDateTime fechaHora;
