@@ -5,6 +5,7 @@
 package moduloIngredientesDAO;
 
 import Conexion.Conexion;
+import Enums.Estado;
 import Enums.UnidadMedida;
 import Exception.PersistenciaException;
 import ModuloIngredientesEntidades.Ingrediente;
@@ -51,7 +52,7 @@ public class IngredienteDAO implements IingredienteDAO {
             em.getTransaction().rollback();
             throw new PersistenciaException("No se pudo registrar el ingrediente");
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
     }
 
@@ -67,7 +68,7 @@ public class IngredienteDAO implements IingredienteDAO {
             em.getTransaction().rollback();
             throw new PersistenciaException("No se pudo actualizar el ingrediente: " + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
     }
 
@@ -90,7 +91,7 @@ public class IngredienteDAO implements IingredienteDAO {
             em.getTransaction().rollback();
             throw new PersistenciaException("No se pudo eliminar el ingrediente: " + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
     }
 
@@ -102,7 +103,7 @@ public class IngredienteDAO implements IingredienteDAO {
         } catch (Exception e) {
             throw new PersistenciaException("Error al buscar todos los ingredientes: " + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
     }
 
@@ -119,11 +120,13 @@ public class IngredienteDAO implements IingredienteDAO {
     @Override
     public boolean comandaActivaConIngrediente(Long idIngrediente) {
         String consulta = "SELECT COUNT(c) FROM Comanda c "
-                + "JOIN c.productos p "
-                + "JOIN p.ingredientes i "
-                + "WHERE i.id = :idIngrediente AND c.estado = 'ABIERTA";
+                + "JOIN c.detalles d "
+                + "JOIN d.producto prod "
+                + "JOIN prod.productos po "
+                + "JOIN po.ingrediente i "
+                + "WHERE i.id = :idIngrediente AND c.estado = :estado";
 
-        Long count = Conexion.crearConexion().createQuery(consulta, Long.class).setParameter("idIngrediente", idIngrediente).getSingleResult();
+        Long count = Conexion.crearConexion().createQuery(consulta, Long.class).setParameter("idIngrediente", idIngrediente).setParameter("estado", Estado.ABIERTA).getSingleResult();
         return count > 0;
 
     }
@@ -144,7 +147,7 @@ public class IngredienteDAO implements IingredienteDAO {
             em.getTransaction().rollback();
             throw new PersistenciaException("No se pudo actualizar el stock del ingrediente: " + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
     }
 

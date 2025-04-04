@@ -32,6 +32,20 @@ public class PruebasIngrediente {
         ingredienteDAO.registrarIngrediente(ingrediente1);
         ingredienteDAO.registrarIngrediente(ingrediente2);
         ingredienteDAO.registrarIngrediente(ingrediente3);
+        System.out.println("Ingredientes registrados, todo bien");
+        
+        ingrediente.setStock(50);
+        ingredienteDAO.actualizarIngrediente(ingrediente);
+        System.out.println("Ingrediente actualizado, todo bien");
+        
+        System.out.println("Lista de ingredientes");
+        for (Ingrediente i : ingredienteDAO.buscarPorTodos()) {
+            System.out.println(i.getId() + " - " + i.getNombre() + " - " + i.getUnidadMedida() + " - " + i.getStock());
+        }
+        
+        boolean eliminado = ingredienteDAO.eliminarIngrediente(1L);
+        System.out.println("Ingrediente eliminado " + eliminado);
+        
     }
 
 }
