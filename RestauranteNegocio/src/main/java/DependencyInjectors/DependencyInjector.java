@@ -4,10 +4,20 @@
  */
 package DependencyInjectors;
 
+import ModuloProductosBO.IProductoBO;
+import ModuloProductosBO.ProductoBO;
+import moduloProductosDAO.IProductoDAO;
+import moduloProductosDAO.ProductoDAO;
+
 /**
  *
  * @author sonic
  */
 public class DependencyInjector {
-    
+    public static IProductoBO crearProductoBO() {
+        IProductoDAO productoDAO = ProductoDAO.getInstanceDAO();
+        IProductoBO productoBO = new ProductoBO(productoDAO);
+        return productoBO;
+        
+    }
 }

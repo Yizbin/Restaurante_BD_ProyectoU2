@@ -157,37 +157,6 @@ public class ProductoDAO implements IProductoDAO {
         }
     }
 
-    @Override
-    public List<IngredienteProductoDTO> obtenerIngredientesDeUnProductoDTO(String nombreProducto) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        List<IngredienteProductoDTO> ingredientes = new ArrayList<>();
-
-        try {
-            List<Object[]> resultados = em.createQuery(
-                    "SELECT i.nombre, poi.cantidadRequerida, i.unidadMedida "
-                    + "FROM ProductoOcupaIngrediente poi "
-                    + "JOIN poi.ingrediente i "
-                    + "JOIN poi.producto p "
-                    + "WHERE p.nombre = :nombreProducto", Object[].class)
-                    .setParameter("nombreProducto", nombreProducto)
-                    .getResultList();
-
-            for (Object[] row : resultados) {
-                IngredienteProductoDTO ingredienteProductoDTO = new IngredienteProductoDTO(
-                        (String) row[0], // nombre del ingrediente
-                        (Double) row[1], // cantidad requerida
-                        ((UnidadMedida) row[2]).name() // unidad de medida
-                );
-                ingredientes.add(ingredienteProductoDTO);
-            }
-
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar los ingredientes de el producto " + e.getMessage());
-        } finally {
-            em.close();
-        }
-        return ingredientes;
-    }
 
     @Override
     public Producto obtenerProductoPorNombre(String nombre) throws PersistenciaException {
@@ -293,7 +262,7 @@ public class ProductoDAO implements IProductoDAO {
 
     }
 
-    //METODOS PARA OBTENER ENTIDADES PRODUCTO EN EL MODULO DE CLIENTES------------------------------------------------------------------------------------
+    //METODOS PARA OBTENER ENTIDADES PRODUCTO EN EL MODULO DE PRODUCTOS------------------------------------------------------------------------------------
     @Override
     public List<Producto> obtenerProductos() throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -352,6 +321,38 @@ public class ProductoDAO implements IProductoDAO {
             em.close();
         }
 
+    }
+    
+    @Override
+    public List<IngredienteProductoDTO> obtenerIngredientesDeUnProductoDTO(String nombreProducto) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        List<IngredienteProductoDTO> ingredientes = new ArrayList<>();
+
+        try {
+            List<Object[]> resultados = em.createQuery(
+                    "SELECT i.nombre, poi.cantidadRequerida, i.unidadMedida "
+                    + "FROM ProductoOcupaIngrediente poi "
+                    + "JOIN poi.ingrediente i "
+                    + "JOIN poi.producto p "
+                    + "WHERE p.nombre = :nombreProducto", Object[].class)
+                    .setParameter("nombreProducto", nombreProducto)
+                    .getResultList();
+
+            for (Object[] row : resultados) {
+                IngredienteProductoDTO ingredienteProductoDTO = new IngredienteProductoDTO(
+                        (String) row[0], // nombre del ingrediente
+                        (Double) row[1], // cantidad requerida
+                        (UnidadMedida) row[2] // unidad de medida
+                );
+                ingredientes.add(ingredienteProductoDTO);
+            }
+
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar los ingredientes de el producto " + e.getMessage());
+        } finally {
+            em.close();
+        }
+        return ingredientes;
     }
     
 }

@@ -4,6 +4,8 @@
  */
 package ModuloProductosDTOs;
 
+import Enums.UnidadMedida;
+
 /**
  *
  * @author sonic
@@ -11,12 +13,12 @@ package ModuloProductosDTOs;
 public class IngredienteProductoDTO {
     private String nombreIngrediente;
     private Double cantidadRequerida;
-    private String unidadMedida;
+    private UnidadMedida unidadMedida;
 
     public IngredienteProductoDTO() {
     }
 
-    public IngredienteProductoDTO(String nombreIngrediente, Double cantidadRequerida, String unidadMedida) {
+    public IngredienteProductoDTO(String nombreIngrediente, Double cantidadRequerida, UnidadMedida unidadMedida) {
         this.nombreIngrediente = nombreIngrediente;
         this.cantidadRequerida = cantidadRequerida;
         this.unidadMedida = unidadMedida;
@@ -38,11 +40,11 @@ public class IngredienteProductoDTO {
         this.cantidadRequerida = cantidadRequerida;
     }
 
-    public String getUnidadMedida() {
+    public UnidadMedida getUnidadMedida() {
         return unidadMedida;
     }
 
-    public void setUnidadMedida(String unidadMedida) {
+    public void setUnidadMedida(UnidadMedida unidadMedida) {
         this.unidadMedida = unidadMedida;
     }
 
@@ -50,6 +52,12 @@ public class IngredienteProductoDTO {
     public String toString() {
         return "IngredienteProductoDTO{" + "nombreIngrediente=" + nombreIngrediente + ", cantidadRequerida=" + cantidadRequerida + ", unidadMedida=" + unidadMedida + '}';
     }
+
+    
+
+    
+
+    
 
     
     

@@ -4,8 +4,8 @@
  */
 package ModuloProductosDTOs;
 
-import ModuloIngredientesDTOs.IngredienteDTO;
-import ModuloIngredientesEntidades.Ingrediente;
+import Enums.EstadoProducto;
+import Enums.TipoPlatillo;
 import java.util.List;
 
 /**
@@ -15,17 +15,19 @@ import java.util.List;
 public class ProductoDTO {
     private String nombre;
     private Double precio;
-    private String tipo;
+    private TipoPlatillo tipo;
+    private EstadoProducto estado;
     private String descripcion;
-    private List<IngredienteDTO> ingredientes;
+    private List<IngredienteProductoDTO> ingredientes;
 
     public ProductoDTO() {
     }
 
-    public ProductoDTO(String nombre, Double precio, String tipo, String descripcion, List<IngredienteDTO> ingredientes) {
+    public ProductoDTO(String nombre, Double precio, TipoPlatillo tipo, EstadoProducto estado, String descripcion, List<IngredienteProductoDTO> ingredientes) {
         this.nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
+        this.estado = estado;
         this.descripcion = descripcion;
         this.ingredientes = ingredientes;
     }
@@ -46,12 +48,20 @@ public class ProductoDTO {
         this.precio = precio;
     }
 
-    public String getTipo() {
+    public TipoPlatillo getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoPlatillo tipo) {
         this.tipo = tipo;
+    }
+
+    public EstadoProducto getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoProducto estado) {
+        this.estado = estado;
     }
 
     public String getDescripcion() {
@@ -62,20 +72,18 @@ public class ProductoDTO {
         this.descripcion = descripcion;
     }
 
-    public List<IngredienteDTO> getIngredientes() {
+    public List<IngredienteProductoDTO> getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(List<IngredienteDTO> ingredientes) {
+    public void setIngredientes(List<IngredienteProductoDTO> ingredientes) {
         this.ingredientes = ingredientes;
     }
-    
-    
 
-    
-
-
-    
-    
+    @Override
+    public String toString() {
+        return "ProductoDTO{" + "nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + ", estado=" + estado + ", descripcion=" + descripcion + ", ingredientes=" + ingredientes + '}';
+    }
+ 
     
 }
