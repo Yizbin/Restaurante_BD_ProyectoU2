@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+
 /**
  *
  * @author sonic
@@ -21,6 +22,13 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
 
     private ClienteFrecuenteDAO() {
 
+    }
+    
+    public static ClienteFrecuenteDAO getInstance() {
+        if (instanceClienteFrecuenteDAO == null) {
+            instanceClienteFrecuenteDAO = new ClienteFrecuenteDAO();
+        }
+        return instanceClienteFrecuenteDAO;
     }
     
     @Override
@@ -185,7 +193,8 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
 
         return em.find(ClienteFrecuente.class, id);
     }
-
+    
+    @Override
     public boolean actualizarPuntosYGasto(Long idCliente, Double gastoNuevo, Integer puntosNuevos) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
@@ -216,6 +225,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
 
     }
     
+    @Override
     public boolean incrementarVisitas(Long id ) {
         
         EntityManager em = Conexion.crearConexion();
