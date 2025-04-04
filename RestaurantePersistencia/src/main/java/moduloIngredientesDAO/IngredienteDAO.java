@@ -151,4 +151,18 @@ public class IngredienteDAO implements IingredienteDAO {
         }
     }
 
+    @Override
+    public Ingrediente buscarPorNombre(String nombre, UnidadMedida unidadMedida) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT i FROM Ingrediente i WHERE i.nombre LIKE :nombre", Ingrediente.class)
+                    .setParameter("nombre", "%" + nombre + "%")
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar Ingrediente por nombre: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
 }

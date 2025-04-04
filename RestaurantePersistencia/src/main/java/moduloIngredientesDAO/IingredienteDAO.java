@@ -28,4 +28,6 @@ public interface IingredienteDAO {
     public boolean eliminarIngrediente(Long id) throws PersistenciaException;
 
     public List<Ingrediente> buscarPorTodos() throws PersistenciaException;
+    
+    public Ingrediente buscarPorNombre(String nombre, UnidadMedida unidadMedida) throws PersistenciaException;
 }
