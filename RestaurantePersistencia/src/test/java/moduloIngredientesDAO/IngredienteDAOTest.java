@@ -115,22 +115,6 @@ public class IngredienteDAOTest {
     }
 
     /**
-     * Test of existeIngrediente method, of class IngredienteDAO.
-     */
-    @Test
-    public void testExisteIngrediente() throws PersistenciaException {
-        Ingrediente ingrediente = new Ingrediente();
-        ingrediente.setNombre("IngredienteTestExiste");
-        ingrediente.setUnidadMedida(UnidadMedida.PIEZAS);
-        ingrediente.setStock(30);
-        dao.registrarIngrediente(ingrediente);
-
-        boolean existe = dao.existeIngrediente("IngredienteTestExiste", UnidadMedida.PIEZAS);
-        assertTrue(existe, "El ingrediente deberia existir");
-
-    }
-
-    /**
      * Test of comandaActivaConIngrediente method, of class IngredienteDAO.
      */
     @Test

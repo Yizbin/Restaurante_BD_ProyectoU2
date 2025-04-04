@@ -34,10 +34,6 @@ public class IngredienteDAO implements IingredienteDAO {
     public Ingrediente registrarIngrediente(Ingrediente ingrediente) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            if (existeIngrediente(ingrediente.getNombre(), ingrediente.getUnidadMedida())) {
-                throw new PersistenciaException("El ingrediente con el mismo nombre y unidad de medida ya existe");
-            }
-
             em.getTransaction().begin();
             em.persist(ingrediente);
             em.getTransaction().commit();
@@ -108,16 +104,6 @@ public class IngredienteDAO implements IingredienteDAO {
     }
 
     @Override
-    public boolean existeIngrediente(String nombre, UnidadMedida unidadMedida) {
-        String consulta = "SELECT COUNT(i) FROM Ingrediente i WHERE i.nombre = :nombre AND i.unidadMedida = :unidadMedida";
-        Long count = Conexion.crearConexion().createQuery(consulta, Long.class)
-                .setParameter("nombre", nombre)
-                .setParameter("unidadMedida", unidadMedida)
-                .getSingleResult();
-        return count > 0;
-    }
-
-    @Override
     public boolean comandaActivaConIngrediente(Long idIngrediente) {
         String consulta = "SELECT COUNT(c) FROM Comanda c "
                 + "JOIN c.detalles d "
@@ -132,7 +118,7 @@ public class IngredienteDAO implements IingredienteDAO {
     }
 
     @Override
-    public void actualizarStock(Long id, int nuevoStock) throws PersistenciaException {
+    public Ingrediente actualizarStock(Long id, int nuevoStock) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
             em.getTransaction().begin();
@@ -143,6 +129,7 @@ public class IngredienteDAO implements IingredienteDAO {
             ingrediente.setStock(nuevoStock);
             em.merge(ingrediente);
             em.getTransaction().commit();
+            return ingrediente;
         } catch (Exception e) {
             em.getTransaction().rollback();
             throw new PersistenciaException("No se pudo actualizar el stock del ingrediente: " + e.getMessage());
