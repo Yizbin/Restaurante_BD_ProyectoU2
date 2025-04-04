@@ -57,7 +57,6 @@ public class ProductoMapper {
         for (IngredienteProductoDTO dto : productoDTO.getIngredientes()) {
             ProductoOcupaIngrediente poi = new ProductoOcupaIngrediente();
 
-            // Crear ingrediente con datos básicos (deberías obtenerlo de la base de datos)
             Ingrediente ingrediente = new Ingrediente();
             ingrediente.setNombre(dto.getNombreIngrediente());
             ingrediente.setUnidadMedida(dto.getUnidadMedida());
