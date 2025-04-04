@@ -33,7 +33,7 @@ public class ClienteFrecuente extends Cliente  {
     private Integer puntos;
 
     @Column(name = "gasto_acumulado", nullable = false)
-    private double gastoAcumulado;
+    private Double gastoAcumulado;
 
     @Column(name = "visitas", nullable = false)
     private Integer visitas;
@@ -54,7 +54,7 @@ public class ClienteFrecuente extends Cliente  {
     }
     //constructor con cleinte y  clienteFrecuente ( SIN ID )
 
-    public ClienteFrecuente(Integer puntos, double gastoAcumulado, Integer visitas, List<Comanda> comandas, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
+    public ClienteFrecuente(Integer puntos, Double gastoAcumulado, Integer visitas, List<Comanda> comandas, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
         super(nombre, apellidoPaterno, apellidoMaterno, telefono, correo, fechaRegistro);
         this.puntos = puntos;
         this.gastoAcumulado = gastoAcumulado;
@@ -63,7 +63,7 @@ public class ClienteFrecuente extends Cliente  {
     }
     // constructor con TODO de los dos clientes
 
-    public ClienteFrecuente(Integer puntos, double gastoAcumulado, Integer visitas, List<Comanda> comandas, Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
+    public ClienteFrecuente(Integer puntos, Double gastoAcumulado, Integer visitas, List<Comanda> comandas, Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
         super(id, nombre, apellidoPaterno, apellidoMaterno, telefono, correo, fechaRegistro);
         this.puntos = puntos;
         this.gastoAcumulado = gastoAcumulado;
@@ -83,7 +83,7 @@ public class ClienteFrecuente extends Cliente  {
         return gastoAcumulado;
     }
 
-    public void setGastoAcumulado(double gastoAcumulado) {
+    public void setGastoAcumulado(Double gastoAcumulado) {
         this.gastoAcumulado = gastoAcumulado;
     }
 

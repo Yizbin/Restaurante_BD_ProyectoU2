@@ -24,13 +24,13 @@ public class ClienteFrecuenteDTO {
     private Date fechaRegistro;
     private int clienteTipo;
     private Integer puntos;
-    private double gastoAcumulado;
+    private Double gastoAcumulado;
     private Integer visitas;
 
     public ClienteFrecuenteDTO() {
     }
 
-    public ClienteFrecuenteDTO(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro, int clienteTipo, Integer puntos, double gastoAcumulado, Integer visitas) {
+    public ClienteFrecuenteDTO(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro, int clienteTipo, Integer puntos, Double gastoAcumulado, Integer visitas) {
         this.id = id;
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
@@ -120,7 +120,7 @@ public class ClienteFrecuenteDTO {
         return gastoAcumulado;
     }
 
-    public void setGastoAcumulado(double gastoAcumulado) {
+    public void setGastoAcumulado(Double gastoAcumulado) {
         this.gastoAcumulado = gastoAcumulado;
     }
 

@@ -4,10 +4,21 @@
  */
 package moduloComandasDAO;
 
+import Conexion.Conexion;
+import Enums.Estado;
+import Exception.PersistenciaException;
+import ModuloComandaEntidades.Comanda;
+import ModuloIngredientesEntidades.Ingrediente;
+import javax.persistence.EntityManager;
+
 /**
  *
  * @author sonic
  */
-public class ComandaDAO {
+public class ComandaDAO implements IComandaDAO {
+    
+    
+    
+    
     
 }
