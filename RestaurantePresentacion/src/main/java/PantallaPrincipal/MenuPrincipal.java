@@ -208,10 +208,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.setTipoUsuario("Mesero");
-        menu.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
