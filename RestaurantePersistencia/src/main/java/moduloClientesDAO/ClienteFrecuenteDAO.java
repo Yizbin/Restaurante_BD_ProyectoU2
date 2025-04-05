@@ -106,15 +106,14 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             if (nombre == null) {
                 throw new PersistenciaException("El nombre no puede ser nulo");
             }
+            String jpql = "SELECT c FROM ClienteFrecuente c "
+                    + "WHERE LOWER(c.nombre) LIKE LOWER(:termino)"
+                    + "OR LOWER(c.apellidoPaterno) LIKE LOWER(:termino)"
+                    + "OR LOWER(c.apellidoMaterno) LIKE LOWER(:termino)";
 
-            return em.createQuery(
-                    "SELECT c FROM ClienteFrecuentes c WHERE"
-                    + "LOWER(c.nombre) LIKE LOWER(:termino) OR"
-                    + "LOWER(c.apellidoPaterno) LIKE LOWER(:termino) OR"
-                    + "LOWER(c.apellidoMaterno) LIKE LOWER(:termino)")
-                    .setParameter("nombre", nombre)
+            return em.createQuery(jpql, ClienteFrecuente.class)
+                    .setParameter("termino", "%" + nombre.toLowerCase() + "%")
                     .getResultList();
-
         } catch (Exception e) {
             throw new PersistenciaException("Error al buscar los clientes por nombre" + e.getMessage());
         } finally {
@@ -132,12 +131,11 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
                 throw new PersistenciaException("El telefono no puede ser nulo");
             }
 
-            return em.createQuery(
-                    "SELECT c FROM ClienteFrecuentes c WHERE"
-                    + "c.telefono = :telefono")
+            String jpql = "SELECT c FROM ClienteFrecuente c WHERE c.telefono = :telefono";
+
+            return em.createQuery(jpql, ClienteFrecuente.class)
                     .setParameter("telefono", telefono)
                     .getResultList();
-
         } catch (Exception e) {
             throw new PersistenciaException("Error al buscar los clientes por nombre" + e.getMessage());
         } finally {
@@ -223,11 +221,9 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             cliente.setGastoAcumulado(gastoActual + gastoNuevo);
             cliente.setPuntos(puntosNuevos + puntosActuales);
 
-            
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-           
 
             em.getTransaction().begin();
             em.merge(cliente);
@@ -250,15 +246,13 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         EntityManager em = Conexion.crearConexion();
 
         try {
-            ClienteFrecuente clienteF = obtenerClienteFrecuentePorId(id);
+            em.getTransaction().begin();
+            ClienteFrecuente clienteF = em.find(ClienteFrecuente.class, id);
             if (clienteF == null) {
+                em.getTransaction().rollback();
                 return false;
             }
-
-            Integer visitasActuales = clienteF.getVisitas();
-            clienteF.setVisitas(visitasActuales + 1);
-
-            em.getTransaction().begin();
+            clienteF.setVisitas(clienteF.getVisitas()+ 1);
             em.merge(clienteF);
             em.getTransaction().commit();
             return true;
@@ -277,15 +271,19 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
     public List<ClienteFrecuente> obtenerTodosClientesFrecuentes() throws PersistenciaException {
 
         EntityManager em = Conexion.crearConexion();
-
+        
         try {
-
+            em.getTransaction().begin();
             TypedQuery<ClienteFrecuente> query = em.createQuery("SELECT c FROM ClienteFrecuente c", ClienteFrecuente.class);
-
-            return query.getResultList();
-
+            
+            List<ClienteFrecuente> resultados =  query.getResultList();
+            em.getTransaction().commit();
+            return resultados;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al buscar los clientes por nombre" + e.getMessage());
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new PersistenciaException("Error al obtener clientes: " + e.getMessage());
         } finally {
             em.close();
         }
