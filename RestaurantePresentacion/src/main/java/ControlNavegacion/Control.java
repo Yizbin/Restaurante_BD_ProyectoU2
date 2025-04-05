@@ -98,7 +98,7 @@ public class Control {
         registrarProducto.setVisible(true);
     }
     
-    public void mostrarListaProductos() {
+    public void mostrarListaProductos() throws PresentacionException {
         if (this.listaProductos == null) {
             this.listaProductos = new ListaProductos();
         }
@@ -106,7 +106,7 @@ public class Control {
         registrarProducto.setVisible(true);
     }
     
-    public void mostrarGestionProductos() { //menu de productos
+    public void mostrarGestionProductos () throws PresentacionException { //menu de productos
         if (this.gestionProductos == null) {
             this.gestionProductos = new GestionProductos();
         }
@@ -167,10 +167,9 @@ public class Control {
     }
 
     //Obtener lista de productos por tipo
-    public List<ProductoDTO> obtenerProductosPorTipo(String tipo) throws PresentacionException {
+    public List<ProductoDTO> obtenerProductosPorTipo(TipoPlatillo tipo) throws PresentacionException {
         try {
-            TipoPlatillo tipoplatillo = TipoPlatillo.valueOf(tipo);
-            return productoBO.obtenerProductosPorTipo(tipoplatillo);
+            return productoBO.obtenerProductosPorTipo(tipo);
         } catch (NegocioException e) {
             throw new PresentacionException(e.getMessage(), e);
         }
@@ -178,10 +177,9 @@ public class Control {
     }
 
     //Obtener lista de productos por nombre y tipo
-    public List<ProductoDTO> obtenerProductosPorTipoYNombre(String nombre, String tipo) throws PresentacionException {
+    public List<ProductoDTO> obtenerProductosPorTipoYNombre(String nombre, TipoPlatillo  tipo) throws PresentacionException {
         try {
-            TipoPlatillo tipoplatillo = TipoPlatillo.valueOf(tipo);
-            return productoBO.obtenerProductoPorNombreYTipo(nombre, tipoplatillo);
+            return productoBO.obtenerProductoPorNombreYTipo(nombre, tipo);
         } catch (NegocioException e) {
             throw new PresentacionException(e.getMessage(), e);
         }
