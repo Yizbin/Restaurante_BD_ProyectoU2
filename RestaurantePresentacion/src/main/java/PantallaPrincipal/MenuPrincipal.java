@@ -115,7 +115,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\sonic\\OneDrive\\Documentos\\GitHub\\Restaurante_BD_ProyectoU2\\RestaurantePresentacion\\src\\main\\java\\IMG\\logo.jpg")); // NOI18N
+        lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/logo.jpg"))); // NOI18N
 
         btnComandas.setBackground(new java.awt.Color(255, 51, 0));
         btnComandas.setForeground(new java.awt.Color(255, 255, 255));
@@ -290,7 +290,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private void configurarBotones(String tipoUsuario) {
         // Dependiendo del tipo de usuario se van a mostrar u ocultar botones
-        if ("Mesero".equals(tipoUsuario)) {
+        if ("Mesero".equals(this.tipoUsuario)) {
             remove(btnClientes);
             remove(btnProductos);
             remove(btnReportes);

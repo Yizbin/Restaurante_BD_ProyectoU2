@@ -64,8 +64,8 @@ public class Control {
     }
     
     public void mostrarMenuPrincipal() {
-        if (this.registrarProducto == null) {
-            this.registrarProducto = new RegistrarProducto();
+        if (this.menuprincipal == null) {
+            this.menuprincipal = new MenuPrincipal();
         }
         
         registrarProducto.setVisible(true);

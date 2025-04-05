@@ -48,7 +48,7 @@ public class IniciarSesion extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1160, 663));
         setResizable(false);
 
-        lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\sonic\\OneDrive\\Documentos\\GitHub\\Restaurante_BD_ProyectoU2\\RestaurantePresentacion\\src\\main\\java\\IMG\\logo.jpg")); // NOI18N
+        lblImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMG/logo.jpg"))); // NOI18N
 
         btnMesero.setText("Soy mesero");
         btnMesero.setToolTipText("");
