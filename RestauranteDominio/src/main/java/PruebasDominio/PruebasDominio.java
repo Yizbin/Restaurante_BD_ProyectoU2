@@ -194,6 +194,13 @@ public class PruebasDominio {
 
         em.persist(detalle1);
         em.persist(detalle2);
+        
+        Double totalAcumulado1 = 0.0;
+        for (DetalleComanda dc : comanda1.getDetalles()) {
+            totalAcumulado1 = totalAcumulado1 + dc.getImporteProducto();
+        }
+        
+        comanda1.setTotalAcumulado(totalAcumulado1);
         em.persist(comanda1);
 
         em.getTransaction().commit();
