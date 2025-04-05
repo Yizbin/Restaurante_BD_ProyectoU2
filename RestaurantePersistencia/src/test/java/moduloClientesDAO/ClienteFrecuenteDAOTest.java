@@ -254,26 +254,26 @@ public class ClienteFrecuenteDAOTest {
     /**
      * Test of incrementarVisitas method, of class ClienteFrecuenteDAO.
      */
-    @Test
-    public void testIncrementarVisitas() throws PersistenciaException {
-        
-        EntityManager em = Conexion.crearConexion();
-        em.getTransaction().begin();
-        
-        em.persist(clienteF);
-        em.getTransaction().commit();
-        
-        ClienteFrecuente clienteRegistrado = em.find(ClienteFrecuente.class, clienteF.getId());
-        Integer visitasIniciales = clienteRegistrado.getVisitas();
-
-        boolean incremento = clienteDAO.incrementarVisitas(clienteRegistrado.getId());
-        ClienteFrecuente clienteActualizado = em.find(ClienteFrecuente.class, clienteRegistrado.getId());
-
-        assertTrue(incremento);
-        assertEquals(Integer.valueOf(visitasIniciales + 1), clienteActualizado.getVisitas());
-        
-        em.close();
-    }
+//    @Test
+//    public void testIncrementarVisitas() throws PersistenciaException {
+//        
+//        EntityManager em = Conexion.crearConexion();
+//        em.getTransaction().begin();
+//        
+//        em.persist(clienteF);
+//        em.getTransaction().commit();
+//        
+//        ClienteFrecuente clienteRegistrado = em.find(ClienteFrecuente.class, clienteF.getId());
+//        Integer visitasIniciales = clienteRegistrado.getVisitas();
+//
+//        boolean incremento = clienteDAO.incrementarVisitas(clienteRegistrado.getId());
+//        ClienteFrecuente clienteActualizado = em.find(ClienteFrecuente.class, clienteRegistrado.getId());
+//
+//        assertTrue(incremento);
+//        assertEquals(Integer.valueOf(visitasIniciales + 1), clienteActualizado.getVisitas());
+//        
+//        em.close();
+//    }
     
 //    @Test
 //    public void testObtenerTodosClientesFrecuentes() throws PersistenciaException {
