@@ -26,10 +26,12 @@ public interface IClienteFrecuenteDAO {
 
     public boolean existeClienteFrecuentePorNombre(String nombre) throws PersistenciaException;
 
-    public ClienteFrecuente obtenerClienteFrecuentePorId(Long id);
+    public ClienteFrecuente obtenerClienteFrecuentePorId(Long id) throws PersistenciaException;
 
     public boolean actualizarPuntosYGasto(Long idCliente, Double gastoNuevo, Integer puntosNuevos) throws PersistenciaException;
     
-     public boolean incrementarVisitas(Long id );
+     public boolean incrementarVisitas(Long id )throws PersistenciaException;
+     
+     public List<ClienteFrecuente> obtenerTodosClientesFrecuentes() throws PersistenciaException;
       
 }

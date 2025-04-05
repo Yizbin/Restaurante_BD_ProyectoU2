@@ -38,37 +38,36 @@ public class ClienteFrecuente extends Cliente  {
     @Column(name = "visitas", nullable = false)
     private Integer visitas;
     
-    @OneToMany ( mappedBy = "clienteFrecuente")
-    private List<Comanda> comandas;
+    
 
     public ClienteFrecuente() {
         super();
     }
     
     //constructor con lo de ClienteFrecuente
-    public ClienteFrecuente(Integer puntos, Double gastoAcumulado, Integer visitas, List<Comanda> comandas) {
+    public ClienteFrecuente(Integer puntos, Double gastoAcumulado, Integer visitas) {
         this.puntos = puntos;
         this.gastoAcumulado = gastoAcumulado;
         this.visitas = visitas;
-        this.comandas = comandas;
+      
     }
     //constructor con cleinte y  clienteFrecuente ( SIN ID )
 
-    public ClienteFrecuente(Integer puntos, Double gastoAcumulado, Integer visitas, List<Comanda> comandas, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
+    public ClienteFrecuente(Integer puntos, Double gastoAcumulado, Integer visitas, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
         super(nombre, apellidoPaterno, apellidoMaterno, telefono, correo, fechaRegistro);
         this.puntos = puntos;
         this.gastoAcumulado = gastoAcumulado;
         this.visitas = visitas;
-        this.comandas = comandas;
+        
     }
     // constructor con TODO de los dos clientes
 
-    public ClienteFrecuente(Integer puntos, Double gastoAcumulado, Integer visitas, List<Comanda> comandas, Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
+    public ClienteFrecuente(Integer puntos, Double gastoAcumulado, Integer visitas, Long id, String nombre, String apellidoPaterno, String apellidoMaterno, String telefono, String correo, Date fechaRegistro) {
         super(id, nombre, apellidoPaterno, apellidoMaterno, telefono, correo, fechaRegistro);
         this.puntos = puntos;
         this.gastoAcumulado = gastoAcumulado;
         this.visitas = visitas;
-        this.comandas = comandas;
+       
     }
 
     public Integer getPuntos() {
@@ -95,13 +94,7 @@ public class ClienteFrecuente extends Cliente  {
         this.visitas = visitas;
     }
 
-    public List<Comanda> getComandas() {
-        return comandas;
-    }
-
-    public void setComandas(List<Comanda> comandas) {
-        this.comandas = comandas;
-    }
+   
 
     
     

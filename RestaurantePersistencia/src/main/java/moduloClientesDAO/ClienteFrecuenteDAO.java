@@ -11,26 +11,25 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-
 /**
  *
- * @author sonic
+ * @author isaac
  */
-public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
+public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
 
     private static ClienteFrecuenteDAO instanceClienteFrecuenteDAO;
 
     private ClienteFrecuenteDAO() {
 
     }
-    
+
     public static ClienteFrecuenteDAO getInstance() {
         if (instanceClienteFrecuenteDAO == null) {
             instanceClienteFrecuenteDAO = new ClienteFrecuenteDAO();
         }
         return instanceClienteFrecuenteDAO;
     }
-    
+
     @Override
     public ClienteFrecuente registrarClienteFrecuente(ClienteFrecuente clienteF) throws PersistenciaException {
 
@@ -68,11 +67,11 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             em.getTransaction().rollback();
             throw new PersistenciaException("No se pudo registrar el cliente frecuente");
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
 
     }
-    
+
     @Override
     public ClienteFrecuente buscarClientePorID(Long idCliente) throws PersistenciaException {
 
@@ -91,12 +90,13 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
 
             return clienteF;
         } catch (Exception e) {
-            throw new PersistenciaException("No se pudo obtener el cliente con el id " + idCliente + e.getMessage());
+            throw new PersistenciaException("error al verificar si existe cliente por telelfono" + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
+
         }
     }
-    
+
     @Override
     public List<ClienteFrecuente> buscarClientesPorNombre(String nombre) throws PersistenciaException {
 
@@ -118,10 +118,10 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
         } catch (Exception e) {
             throw new PersistenciaException("Error al buscar los clientes por nombre" + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
     }
-    
+
     @Override
     public List<ClienteFrecuente> buscarClientesPorTelefono(String telefono) throws PersistenciaException {
 
@@ -141,11 +141,11 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
         } catch (Exception e) {
             throw new PersistenciaException("Error al buscar los clientes por nombre" + e.getMessage());
         } finally {
-            Conexion.cerrarConexion();
+            em.close();
         }
 
     }
-    
+
     @Override
     public boolean existeClienteFrecuentePorTelefono(String telefono) throws PersistenciaException {
 
@@ -161,11 +161,13 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             query.setParameter("telefono", telefono);
             return query.getSingleResult() > 0;
         } catch (Exception e) {
-            return false;
+            throw new PersistenciaException("error al verificar si existe cliente por telelfono" + e.getMessage());
+        } finally {
+            em.close();
         }
 
     }
-    
+
     @Override
     public boolean existeClienteFrecuentePorNombre(String nombre) throws PersistenciaException {
 
@@ -181,24 +183,34 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             query.setParameter("nombre", nombre);
             return query.getSingleResult() > 0;
         } catch (Exception e) {
-            return false;
+            throw new PersistenciaException("error al verificar si existe cliente por telelfono" + e.getMessage());
+        } finally {
+            em.close();
         }
 
     }
-    
+
     @Override
-    public ClienteFrecuente obtenerClienteFrecuentePorId(Long id) {
+    public ClienteFrecuente obtenerClienteFrecuentePorId(Long id) throws PersistenciaException {
 
         EntityManager em = Conexion.crearConexion();
 
-        return em.find(ClienteFrecuente.class, id);
+        try {
+            return em.find(ClienteFrecuente.class, id);
+
+        } catch (Exception e) {
+            throw new PersistenciaException("error al verificar si existe cliente por telelfono" + e.getMessage());
+        } finally {
+            em.close();
+        }
+
     }
-    
+
     @Override
     public boolean actualizarPuntosYGasto(Long idCliente, Double gastoNuevo, Integer puntosNuevos) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
-        try {
 
+        try {
             ClienteFrecuente cliente = obtenerClienteFrecuentePorId(idCliente);
 
             if (cliente == null) {
@@ -211,43 +223,71 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
             cliente.setGastoAcumulado(gastoActual + gastoNuevo);
             cliente.setPuntos(puntosNuevos + puntosActuales);
 
+            
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+           
+
             em.getTransaction().begin();
             em.merge(cliente);
             em.getTransaction().commit();
             return true;
-        } catch (Exception e) {
 
+        } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            return false;
+            throw new PersistenciaException(" no se pudo actualizar puntos y gasto del cliente" + e.getMessage());
+        } finally {
+            em.close();
         }
-
     }
-    
+
     @Override
-    public boolean incrementarVisitas(Long id ) {
-        
+    public boolean incrementarVisitas(Long id) throws PersistenciaException {
+
         EntityManager em = Conexion.crearConexion();
-        
+
         try {
             ClienteFrecuente clienteF = obtenerClienteFrecuentePorId(id);
             if (clienteF == null) {
                 return false;
             }
-            
+
             Integer visitasActuales = clienteF.getVisitas();
             clienteF.setVisitas(visitasActuales + 1);
-            
+
             em.getTransaction().begin();
             em.merge(clienteF);
             em.getTransaction().commit();
             return true;
-        } catch ( Exception e) {
-            if ( em.getTransaction().isActive()) {
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            return false;
+            throw new PersistenciaException("Error al incrementar visitas" + e.getMessage());
+        } finally {
+            em.close();
+
+        }
+    }
+
+    @Override
+    public List<ClienteFrecuente> obtenerTodosClientesFrecuentes() throws PersistenciaException {
+
+        EntityManager em = Conexion.crearConexion();
+
+        try {
+
+            TypedQuery<ClienteFrecuente> query = em.createQuery("SELECT c FROM ClienteFrecuente c", ClienteFrecuente.class);
+
+            return query.getResultList();
+
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar los clientes por nombre" + e.getMessage());
+        } finally {
+            em.close();
         }
     }
 
