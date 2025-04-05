@@ -15,6 +15,7 @@ import javax.persistence.TypedQuery;
  *
  * @author isaac
  */
+
 public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
 
     private static ClienteFrecuenteDAO instanceClienteFrecuenteDAO;
@@ -238,35 +239,37 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         } finally {
             em.close();
         }
+    
+
+
+//    @Override
+//    public boolean incrementarVisitas(Long id) throws PersistenciaException {
+//
+//        EntityManager em = Conexion.crearConexion();
+//
+//        try {
+//            em.getTransaction().begin();
+//            ClienteFrecuente clienteF = em.find(ClienteFrecuente.class, id);
+//            if (clienteF == null) {
+//                em.getTransaction().rollback();
+//                return false;
+//            }
+//            clienteF.setVisitas(clienteF.getVisitas()+ 1);
+//            em.merge(clienteF);
+//            em.getTransaction().commit();
+//            return true;
+//        } catch (Exception e) {
+//            if (em.getTransaction().isActive()) {
+//                em.getTransaction().rollback();
+//            }
+//            throw new PersistenciaException("Error al incrementar visitas" + e.getMessage());
+//        } finally {
+//            em.close();
+//
+//        }
+//    }
+
     }
-
-    @Override
-    public boolean incrementarVisitas(Long id) throws PersistenciaException {
-
-        EntityManager em = Conexion.crearConexion();
-
-        try {
-            em.getTransaction().begin();
-            ClienteFrecuente clienteF = em.find(ClienteFrecuente.class, id);
-            if (clienteF == null) {
-                em.getTransaction().rollback();
-                return false;
-            }
-            clienteF.setVisitas(clienteF.getVisitas()+ 1);
-            em.merge(clienteF);
-            em.getTransaction().commit();
-            return true;
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw new PersistenciaException("Error al incrementar visitas" + e.getMessage());
-        } finally {
-            em.close();
-
-        }
-    }
-
     @Override
     public List<ClienteFrecuente> obtenerTodosClientesFrecuentes() throws PersistenciaException {
 
