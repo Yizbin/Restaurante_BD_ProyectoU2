@@ -4,17 +4,36 @@
  */
 package ModuloIngredientes;
 
+import DependencyInjectors.DependencyInjector;
+import ModuloIngredienteBO.IingredienteBO;
+import java.awt.BorderLayout;
+
 /**
  *
- * @author PC Gamer
+ * @author Abraham Coronel Bringas
  */
 public class GestionIngredientes extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GestionIngredientes
-     */
+    private IingredienteBO ingredienteBO;
+
     public GestionIngredientes() {
+        this.ingredienteBO = DependencyInjector.crearIngredienteBO();
         initComponents();
+        cargarListaIngredientes();
+    }
+
+    private void cargarListaIngredientes() {
+        // Eliminar el layout actual del panel
+        panelListaIngredientes.removeAll();
+        panelListaIngredientes.setLayout(new java.awt.BorderLayout());
+
+        // Crear e integrar ListaIngredientes
+        ListaIngredientes lista = new ListaIngredientes(ingredienteBO);
+        panelListaIngredientes.add(lista, BorderLayout.CENTER);
+
+        // Actualizar la interfaz
+        panelListaIngredientes.revalidate();
+        panelListaIngredientes.repaint();
     }
 
     /**
@@ -31,7 +50,7 @@ public class GestionIngredientes extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        panelListaIngredientes = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(235, 206, 178));
@@ -66,14 +85,14 @@ public class GestionIngredientes extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelListaIngredientesLayout = new javax.swing.GroupLayout(panelListaIngredientes);
+        panelListaIngredientes.setLayout(panelListaIngredientesLayout);
+        panelListaIngredientesLayout.setHorizontalGroup(
+            panelListaIngredientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 592, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelListaIngredientesLayout.setVerticalGroup(
+            panelListaIngredientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 219, Short.MAX_VALUE)
         );
 
@@ -95,9 +114,10 @@ public class GestionIngredientes extends javax.swing.JFrame {
                         .addComponent(btnVolver))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(157, 157, 157)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(titulo))))
+                        .addComponent(titulo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(panelListaIngredientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(187, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,7 +126,7 @@ public class GestionIngredientes extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(titulo)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelListaIngredientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
@@ -168,7 +188,7 @@ public class GestionIngredientes extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel panelListaIngredientes;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
